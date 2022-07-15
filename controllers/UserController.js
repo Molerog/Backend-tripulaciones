@@ -93,11 +93,17 @@ const UserController = {
   async userDelete(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.user._id)
-      await Post.deleteMany({userId:req.user._id})
-      await Comment.deleteMany({userId:req.user._id});
       res.status(201).send({ message: `The user ${user} has been deleted` });
     } catch (error) {
       res.send({ message: "We had an issue removing the user..." });
+    }
+  },
+  async getAll(req, res) {
+    try {
+      const users = await User.find();
+      res.send(users);
+    } catch (error) {
+      console.error(error);
     }
   },
 }
