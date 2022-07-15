@@ -92,8 +92,8 @@ const UserController = {
   },
   async userDelete(req, res) {
     try {
-      const user = await User.findByIdAndDelete(req.user._id);
-      res.status(201).send({ message:'Se ha eliminado al usuario'}, user);
+      await User.findByIdAndDelete(req.user._id);
+      res.status(201).send({ message:'Se ha eliminado al usuario'});
     } catch (error) {
       res.send({ message: "We had an issue removing the user..." });
     }
