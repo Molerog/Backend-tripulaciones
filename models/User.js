@@ -20,11 +20,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required:[true, 'Please enter a password'],
     },
+    
+    genre: {
+      type: String,
+      required:[true, 'Please enter a genre'],
+    },
     role: String,
     confirmed: Boolean,
     imagepath: String,
     tokens: [],  
+    
   },
+  
   { timestamps: true },
   
 );
