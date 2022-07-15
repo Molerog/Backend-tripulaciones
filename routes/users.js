@@ -12,7 +12,7 @@ router.get('/',UserController.getAll)
 router.delete('/logout',authentication, UserController.logoutUser);
 router.put('/',uploadUserImages.single('imageUser'),authentication, UserController.update);
 router.get('/info',authentication,UserController.getInfo);
-// router.get('/confirm/:email', UserController.confirm);
+router.get('/confirm/:emailToken', UserController.confirm);
 
 
 module.exports = router;

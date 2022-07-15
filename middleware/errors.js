@@ -18,7 +18,7 @@ const typeError = (err, req, res, next) => {
     const errOrigin = err.origin
     if(err.name === 'ValidationError') return err = handleValidationError(err, res);
     else if (err.code === 11000){
-        res.status(400).send({message: 'The email already exists'})
+        res.status(400).send({message: 'Este email ya existe'})
     }  
      else if (errOrigin === 'User'){
            res.status(500).send('We had an issue creating the User...');

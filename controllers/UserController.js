@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-// const transporter = require("../config/nodemailer");
+const transporter = require("../config/nodemailer");
 
 const UserController = {
   async create(req, res, next) {
@@ -26,21 +26,21 @@ const UserController = {
       } else {
         const user = await User.create({
           ...req.body,
-          confirmed: true,
+          confirmed: false,
           password: hash,
           role: "user",
         });
-        //...req.body representa todo lo demás(es un spread y no podríamos modificar las propiedades que quisieramos de body)
-        // const url = "http://localhost:8080/users/confirm/" + req.body.email;
-        // await transporter.sendMail({
-        //   to: req.body.email,
-        //   subject: "Confirme su registro",
-        //   html: `<h3>Bienvenido, estás a un paso de registrarte </h3>
-        //  <a href="${url}"> Click para confirmar tu registro</a>
-        //  `,
-        // });
+        const emailToken = await jwt.sign({ email: req.body.email }, JWT_SECRET, { expiresIn: '48h' })
+        const url = "http://localhost:8080/users/confirm/" + emailToken
+        await transporter.sendMail({
+            to: req.body.email,
+            subject: "Confirma tu registro a nuestra red social",
+            html: `<h2>¡Hola ${user.name}!</h2>
+            <p>Para finalizar tu registro correctamente <a href=${url}>haz click aquí</a> </p>
+            `
+        })
         res.status(201).send({
-          // message: "We have sent you an email to confirm your register...",
+          message: "Te hemos enviado un email para confirmar tu registro...",
           user,
         });
       }
@@ -51,51 +51,48 @@ const UserController = {
     }
   },
   async confirm(req, res) {
-    //esta función confirm se aplica cuando clicamos en el enlace enviado al email
     try {
-      await User.updateOne(
-        {
-          email: req.params.email,
-        },
-        { confirmed: true }
-      ); //no esta actualizando el email, está buscando al usuario por el email introducido en el body al registrarse que volverá como parámetro
-      res.status(201).send("User confirm succesfull");
+        const payload = jwt.verify(req.params.emailToken, JWT_SECRET)
+        console.log("aqui",payload)
+        await User.updateOne({ email: payload.email }, { $set: { confirmed: true } })
+        res.status(201).send(`Te has verificado correctamente`)
     } catch (error) {
-      console.error(error);
+        console.error(error)
+        res.status(404).send(`Enlace roto :(`)
     }
-  },
+},
   async login(req, res) {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res
           .status(400)
-          .send({ message: "User or password incorrect..." });
+          .send({ message: "Usuario/contraseña incorrectos..." });
       }
       if (!user.confirmed) {
-        return res.status(400).send({ message: "You may confirm your email" });
+        return res.status(400).send({ message: "Debes confirmar tu email" });
       }
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
         return res
           .status(400)
-          .send({ message: "User or password incorrect..." });
+          .send({ message: "Usuario/contraseña incorrectos..." });
       }
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ message: "Bienvenido " + user.name, user, token });
+      res.send({ message: "Bienvenid@ " + user.name, user, token });
     } catch (error) {
-      res.status(401).send({ message: "We had an issue checking the user..." });
+      res.status(401).send({ message: "Error al comprobar el usuario..." });
     }
   },
   async userDelete(req, res) {
     try {
-      await User.findByIdAndDelete(req.user._id);
-      res.status(201).send({ message:'Se ha eliminado al usuario'});
+      const user = await User.findByIdAndDelete(req.user._id);
+      res.status(201).send({ message: `El usuario ${user} ha sido borrado` });
     } catch (error) {
-      res.send({ message: "We had an issue removing the user..." });
+      res.send({ message: "Problema al borrar usuario..." });
     }
   },
   async getAll(req, res) {
@@ -115,7 +112,7 @@ const UserController = {
     } catch (error) {
       console.error(error);
       res.status(500).send({
-        message: "We had a problem trying to disconnect you",
+        message: "Problemas para desconectarse",
       });
     }
   },
@@ -131,7 +128,7 @@ const UserController = {
       const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
         new: true,
       });
-      res.send({ message: "User successfully updated", user });
+      res.send({ message: "Usuario modificado con éxito", user });
     } catch (error) {
       console.error(error);
     }
@@ -146,7 +143,7 @@ const UserController = {
       console.log(error);
       res
         .status(500)
-        .send({ message: "We had a problem searching that information" });
+        .send({ message: "Problemas para traer tu información" });
     }
   },
 };
