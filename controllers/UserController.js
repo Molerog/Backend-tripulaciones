@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-const transporter = require("../config/nodemailer");
+// const transporter = require("../config/nodemailer");
 
 const UserController = {
   async create(req, res, next) {
@@ -29,19 +29,21 @@ const UserController = {
           password: hash,
           role: "user",
         });
+        console.log('hola')
         //...req.body representa todo lo demás(es un spread y no podríamos modificar las propiedades que quisieramos de body)
-        const url = "http://localhost:8080/users/confirm/" + req.body.email; //enviamos esta url en forma de enlace al correo puesto por el usuario
-        await transporter.sendMail({
-          to: req.body.email,
-          subject: "Confirme su registro",
-          html: `<h3>Bienvenido, estás a un paso de registrarte </h3>
-         <a href="${url}"> Click para confirmar tu registro</a>
-         `,
-        });
+        // const url = "http://localhost:8080/users/confirm/" + req.body.email; 
+        // await transporter.sendMail({
+        //   to: req.body.email,
+        //   subject: "Confirme su registro",
+        //   html: `<h3>Bienvenido, estás a un paso de registrarte </h3>
+        //  <a href="${url}"> Click para confirmar tu registro</a>
+        //  `,
+        // });
         res.status(201).send({
-          message: "We have sent you an email to confirm your register...",
+          // message: "We have sent you an email to confirm your register...",
           user,
         });
+        console.log('hola', user)
       }
     } catch (error) {
       console.log(error);
