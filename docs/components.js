@@ -101,6 +101,23 @@ module.exports = {
         description: "User's id",
         example: "629f5529328f820b7dfe17cf",
       },
+      userLogin: {
+        type: "object",
+        properties: {
+          email: {
+            type: "string",
+            description: "email del usuario",
+            example: "mol@gmail.com",
+            required: true,
+          },
+          password: {
+            type: "string",
+            description: "clave del usuario",
+            example: "123456",
+            required: true,
+          },
+        },
+      },
     },
   },
 };

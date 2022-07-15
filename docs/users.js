@@ -3,7 +3,7 @@ module.exports = {
     "/users": {
       get: {
         tags: {
-          Users: "Get Users",
+          Usuarios: " Obtener usuarios",
         },
         description:
           "Obtiene todos los usuarios registrados en la base de datos",
@@ -24,7 +24,7 @@ module.exports = {
       },
       post: {
         tags: {
-          Users: "Create Users",
+          Usuarios: " Registrar usuarios",
         },
         description:
           "Endpoint para crear usuario, los campos 'name', 'password' y 'email' son obligatorios",
@@ -60,7 +60,7 @@ module.exports = {
           },
         ],
         tags: {
-          Users: "Delete a user",
+          Usuarios: " Borrar usuario",
         },
         description: "Deleting a User",
         operationId: "deleteUser",
@@ -78,19 +78,19 @@ module.exports = {
           },
         ],
         tags: {
-          Users: "Update an user",
+          Usarios: " Actualizar perfil de usuario",
         },
         description: "Update User",
         operationId: "updateUser",
         parameters: [
-        //   {
-        //     name: "_id",
-        //     in: "path",
-        //     schema: {
-        //       $ref: "#/components/schemas/_id",
-        //     },
-        //     description: "Update the user logged",
-        //   },
+          //   {
+          //     name: "_id",
+          //     in: "path",
+          //     schema: {
+          //       $ref: "#/components/schemas/_id",
+          //     },
+          //     description: "Update the user logged",
+          //   },
         ],
         requestBody: {
           content: {
@@ -111,6 +111,73 @@ module.exports = {
           404: { description: "User not found" },
           500: { description: "Server error" },
         },
+      },
+    },
+    "/users/login": {
+      post: {
+        tags: {
+          Usuario: " Login de usuario",
+        },
+        description: "Loguea al usuario",
+        operationId: "loginUser",
+        parameters: [],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/userLogin",
+              },
+            },
+          },
+        },
+
+        responses: {
+          200: {
+            description: "Usuario logueado",
+          },
+          404: { description: "Usuario no encontrado" },
+          500: { description: "Error de servido" },
+        },
+      },
+    },
+    "/users/logout": {
+      delete: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Usuarios: " Logout de usuario",
+        },
+        description: "Elimina al usuario",
+        operationId: "deleteUser",
+        parameters: [],
+        responses: {
+          200: { description: "User deleted successfully" },
+          404: { description: "User not found" },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/users/info": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags:{
+            Usuarios: " Información del usuario conectado",
+        },
+        description: "Obtiene información",
+        operationId: "infoUser",
+        parameters:[],
+        responses:{
+            200: { description: "User deleted successfully" },
+            404: { description: "User not found" },
+            500: { description: "Server error" },
+          },
       },
     },
   },
