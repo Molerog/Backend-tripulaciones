@@ -23,12 +23,7 @@ const UserSchema = new mongoose.Schema(
     role: String,
     confirmed: Boolean,
     imagepath: String,
-    tokens: [],
-    postIds: [{type: ObjectId, ref: 'Post'}],
-    wishList: [{type: ObjectId, ref: 'Post'}],
-    followers: [{type: ObjectId, ref: 'User'}],
-    following: [{ type: ObjectId, ref: 'User'}],
-    
+    tokens: [],  
   },
   { timestamps: true },
   
