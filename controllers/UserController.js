@@ -29,7 +29,6 @@ const UserController = {
           password: hash,
           role: "user",
         });
-        console.log('hola')
         //...req.body representa todo lo demás(es un spread y no podríamos modificar las propiedades que quisieramos de body)
         // const url = "http://localhost:8080/users/confirm/" + req.body.email; 
         // await transporter.sendMail({
@@ -43,7 +42,6 @@ const UserController = {
           // message: "We have sent you an email to confirm your register...",
           user,
         });
-        console.log('hola', user)
       }
     } catch (error) {
       console.log(error);
