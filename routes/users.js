@@ -11,6 +11,7 @@ router.delete('/',authentication,UserController.userDelete);
 router.get('/',UserController.getAll)
 router.delete('/logout',authentication, UserController.logoutUser);
 router.put('/update',uploadUserImages.single('imageUser'),authentication, UserController.update);
+router.get('/info',authentication,UserController.getInfo);
 // router.get('/confirm/:email', UserController.confirm);
 
 

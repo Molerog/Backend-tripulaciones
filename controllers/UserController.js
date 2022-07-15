@@ -8,7 +8,7 @@ const UserController = {
   async create(req, res, next) {
     try {
       let hash;
-      
+
       if (req.body.password !== undefined) {
         hash = bcrypt.hashSync(req.body.password, 10);
       }
@@ -31,7 +31,7 @@ const UserController = {
           role: "user",
         });
         //...req.body representa todo lo demás(es un spread y no podríamos modificar las propiedades que quisieramos de body)
-        // const url = "http://localhost:8080/users/confirm/" + req.body.email; 
+        // const url = "http://localhost:8080/users/confirm/" + req.body.email;
         // await transporter.sendMail({
         //   to: req.body.email,
         //   subject: "Confirme su registro",
@@ -92,7 +92,7 @@ const UserController = {
   },
   async userDelete(req, res) {
     try {
-      const user = await User.findByIdAndDelete(req.user._id)
+      const user = await User.findByIdAndDelete(req.user._id);
       res.status(201).send({ message: `The user ${user} has been deleted` });
     } catch (error) {
       res.send({ message: "We had an issue removing the user..." });
@@ -126,18 +126,29 @@ const UserController = {
         name: req.body.name,
         imagepath: req.file?.filename,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
       };
-      const user = await User.findByIdAndUpdate(
-        req.user._id,
-        updatedUser,
-        { new: true }
-      )
-      res.send({ message: "User successfully updated", user })
+      const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
+        new: true,
+      });
+      res.send({ message: "User successfully updated", user });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
-}
+  async getInfo(req, res) {
+    try {
+      const user = await User.findById(req.user._id) // también se puede User.findOne({_id: req.user._id})
+        .select(["-password", "-tokens"])
+      // user._doc.totalFollowers = user.followers.length;
+      res.status(200).send(user);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .send({ message: "We had a problem searching that information" });
+    }
+  },
+};
 
 module.exports = UserController;
