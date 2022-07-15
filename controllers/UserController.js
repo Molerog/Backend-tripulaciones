@@ -8,6 +8,7 @@ const UserController = {
   async create(req, res, next) {
     try {
       let hash;
+      
       if (req.body.password !== undefined) {
         hash = bcrypt.hashSync(req.body.password, 10);
       }
