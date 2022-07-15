@@ -85,11 +85,21 @@ const UserController = {
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ message: "Welcome " + user.name, user, token });
+      res.send({ message: "Bienvenido " + user.name, user, token });
     } catch (error) {
       res.status(401).send({ message: "We had an issue checking the user..." });
     }
-  }
+  },
+  async userDelete(req, res) {
+    try {
+      const user = await User.findByIdAndDelete(req.user._id)
+      await Post.deleteMany({userId:req.user._id})
+      await Comment.deleteMany({userId:req.user._id});
+      res.status(201).send({ message: `The user ${user} has been deleted` });
+    } catch (error) {
+      res.send({ message: "We had an issue removing the user..." });
+    }
+  },
 }
 
 module.exports = UserController;
