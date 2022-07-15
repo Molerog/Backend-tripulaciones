@@ -17,8 +17,8 @@ dbConnection()
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
-// app.use('/posts', require ('./routes/posts'));
+
 app.use('/users', require ('./routes/users'));
-// app.use('/comments', require ('./routes/comment'));
+
 
 app.use(typeError);
