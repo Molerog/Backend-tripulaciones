@@ -37,10 +37,10 @@ module.exports = {
                 $ref: "#/components/schemas/userCreate",
               },
             },
-            "image/jpg":{
-                schema:{
-                    $ref: "#/components/schemas/userCreate",
-                }
+            "image/jpg": {
+              schema: {
+                $ref: "#/components/schemas/userCreate",
+              },
             },
           },
         },
@@ -78,24 +78,31 @@ module.exports = {
           },
         ],
         tags: {
-          Users: "Update a user",
+          Users: "Update an user",
         },
         description: "Update User",
         operationId: "updateUser",
         parameters: [
-          {
-            name: "_id",
-            in: "path",
-            schema: {
-              $ref: "#/components/schemas/_id",
-            },
-            description: "Update tue user logged",
-          },
+        //   {
+        //     name: "_id",
+        //     in: "path",
+        //     schema: {
+        //       $ref: "#/components/schemas/_id",
+        //     },
+        //     description: "Update the user logged",
+        //   },
         ],
         requestBody: {
           content: {
-            "application/json": {
-              schema: { $ref: "#/components/schemas/userUpdate" },
+            "multipart/form-data": {
+              schema: {
+                $ref: "#/components/schemas/userUpdate",
+              },
+            },
+            "image/jpg": {
+              schema: {
+                $ref: "#/components/schemas/userUpdate",
+              },
             },
           },
         },

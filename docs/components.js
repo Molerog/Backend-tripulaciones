@@ -46,6 +46,7 @@ module.exports = {
             description: "user's name",
             example: "Germán",
             required: true,
+            example: "Germán",
           },
           email: {
             type: "string",
@@ -57,12 +58,13 @@ module.exports = {
           imageUser: {
             type: "string",
             format: "binary",
+            example: "1657907225788-Resident Evil.jpg",
           },
           genre: {
             type: "string",
             description: "user's genre",
-            example: "Male",
             required: true,
+            example: "male",
           },
         },
       },
@@ -73,7 +75,24 @@ module.exports = {
             type: "string",
             description: "user's name",
             example: "ger",
+          },
+          email: {
+            type: "string",
+            description: "user's email",
+            example: "test@gmail.com",
             required: true,
+            unique: true,
+          },
+          imageUser: {
+            type: "string",
+            format: "binary",
+            example: "1657907225788-Resident Evil.jpg",
+          },
+          genre: {
+            type: "string",
+            description: "user's genre",
+            required: true,
+            example: "male",
           },
         },
       },
