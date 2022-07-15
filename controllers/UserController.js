@@ -119,6 +119,25 @@ const UserController = {
       });
     }
   },
+
+  async update(req, res) {
+    try {
+      const updatedUser = {
+        name: req.body.name,
+        imagepath: req.file?.filename,
+        email: req.body.email,
+        password: req.body.password
+      };
+      const user = await User.findByIdAndUpdate(
+        req.user._id,
+        updatedUser,
+        { new: true }
+      )
+      res.send({ message: "User successfully updated", user })
+    } catch (error) {
+      console.error(error)
+    }
+  },
 }
 
 module.exports = UserController;
