@@ -90,7 +90,7 @@ const UserController = {
   async userDelete(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.user._id);
-      res.status(201).send({ message: `El usuario ${user} ha sido borrado` });
+      res.status(201).send({ message: `El usuario ${user.name} ha sido borrado` });
     } catch (error) {
       res.send({ message: "Problema al borrar usuario..." });
     }
@@ -119,11 +119,17 @@ const UserController = {
 
   async update(req, res) {
     try {
+      let hashedPassword;
+      const {password} = req.body
+      if (password !== undefined){
+        hashedPassword = await bcrypt.hashSync(password,10)
+      }
       const updatedUser = {
         name: req.body.name,
         imagepath: req.file?.filename,
         email: req.body.email,
-        password: req.body.password,
+        password: hashedPassword,
+        genre: req.body.genre
       };
       const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
         new: true,

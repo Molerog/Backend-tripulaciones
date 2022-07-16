@@ -6,6 +6,11 @@ module.exports = {
         name: "Authorization",
         in: "header",
       },
+      // JWT:{
+      //   type: "apiKey",
+      //   in: "query",
+      //   name: "access_token",
+      // }
     },
     schemas: {
       userGet: {

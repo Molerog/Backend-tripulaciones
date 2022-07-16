@@ -167,18 +167,41 @@ module.exports = {
             ApiKeyAuth: [],
           },
         ],
-        tags:{
-            Usuarios: " Información del usuario conectado",
+        tags: {
+          Usuarios: " Información del usuario conectado",
         },
         description: "Obtiene información",
         operationId: "infoUser",
-        parameters:[],
-        responses:{
-            200: { description: "User deleted successfully" },
-            404: { description: "User not found" },
-            500: { description: "Server error" },
-          },
+        parameters: [],
+        responses: {
+          200: { description: "User deleted successfully" },
+          404: { description: "User not found" },
+          500: { description: "Server error" },
+        },
       },
     },
+    // "/users/confirm/:{emailToken}": {
+    //   get: {
+    //     security: [
+    //       {
+    //         JWT: [],
+    //       },
+    //     ],
+    //     tags: {
+    //       Usuarios: "Confirmación de email",
+    //     },
+    //     description: "Confirmación de usuario",
+    //     operationId: "confirmUser",
+    //     parameters: [
+    //       {
+    //         name: "emailToken",
+    //         in: "path",
+    //         schema: {
+    //             $ref: "#/components/schemas/emailToken",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
   },
 };
