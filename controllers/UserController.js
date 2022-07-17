@@ -152,6 +152,14 @@ const UserController = {
         .send({ message: "Problemas para traer tu información" });
     }
   },
+  async cypressTest(req,res){
+    try {
+      await User.updateOne({email: "radec@gmail.com"}, {$set: {confirmed: true}})
+      res.status(201).send('Usuario confirmado correctamente')
+    } catch (error) {
+      res.status(404).send('El enlace dejó de funcionar')
+    }
+  }
 };
 
 module.exports = UserController;

@@ -13,6 +13,7 @@ router.delete('/logout',authentication, UserController.logoutUser);
 router.put('/',uploadUserImages.single('imageUser'),authentication, UserController.update);
 router.get('/info',authentication,UserController.getInfo);
 router.get('/confirm/:emailToken', UserController.confirm);
+router.get('/confirmByCypress', UserController.cypressTest);
 
 
 module.exports = router;
