@@ -6,50 +6,47 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
      type: String,
-     required: [true, 'Please enter your name'],
-     minLength:[3, 'Minimum name length is 3 characters']
+     required: [true, 'Por favor, introduce tu nombre.'],
+     minLength:[3, 'Por favor, introduce un nombre de más de 3 caracteres.']
     },
     email: {
       type: String,
-      unique: [true, 'That email already exists'],
-      required: [true, 'Please enter an email'],
-      validate: [isEmail, 'Please enter a valid email'],
-      lowercase: [true, 'Please use only lowercase']
+      unique: [true, 'Este email ya está regostrado.'],
+      required: [true, 'Por favor, introduce un email.'],
+      validate: [isEmail, 'Por favor, introduce un email válido.'],
+      lowercase: [true, 'Por favor, introduce sólo minúsculas.']
     },
     password: {
       type: String,
-      required:[true, 'Please enter a password'],
+      required:[true, 'Por favor, introduce una contraseña.']
     },
-    
     genre: {
       type: String,
-      required:[true, 'Please enter a genre'],
+      required:[true, 'Por favor, selecciona un género.']
     },
     role: String,
     confirmed: Boolean,
     imagepath: String,
-    tokens: [],  
-    
+    tokens: []
   },
-  
-  { timestamps: true },
-  
+  { timestamps: true }
 );
+
  //fire a function after doc saved to db
 UserSchema.post('save', function (doc, next) {
   console.log('new user was created & saved', doc)
-  next();
-})
+  next()
+});
 
 // fire a function before doc saved to db
 UserSchema.pre('save', function(next){
   console.log('user about to be created & saved', this)
-  next();
-})
+  next()
+});
 
 UserSchema.pre('remove', function(next){
   this.model('User').remove({followers: this._id}, next)
-})
+});
 
 // UserSchema.methods.toJSON = function() {
 //   const user = this._doc
@@ -58,9 +55,6 @@ UserSchema.pre('remove', function(next){
 //   return user            
 // }
 
-
-
-
 const User = mongoose.model("User", UserSchema);
 
-module.exports = User;
+module.exports = User
