@@ -190,6 +190,6 @@ const UserController = {
       res.status(404).send('El enlace dejó de funcionar.')
     }
   }
-}
+};
 
 module.exports = UserController

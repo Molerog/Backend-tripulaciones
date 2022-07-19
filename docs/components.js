@@ -4,7 +4,7 @@ module.exports = {
       ApiKeyAuth: {
         type: "apiKey",
         name: "Authorization",
-        in: "header",
+        in: "header"
       },
       // JWT:{
       //   type: "apiKey",
@@ -18,47 +18,47 @@ module.exports = {
         properties: {
           _id: {
             type: "objectId",
-            description: "user identification number",
-            example: "6201064b0028de7866e2b2c4",
+            description: "ID del usuario",
+            example: "6201064b0028de7866e2b2c4"
           },
           name: {
             type: "string",
-            description: "user's title",
-            example: "Germán",
+            description: "Nombre del usuario",
+            example: "Germán"
           },
           email: {
             type: "string",
-            description: "user's email",
-            example: "test@gmail.com",
+            description: "Email del usuario",
+            example: "test@gmail.com"
           },
           role: {
             type: "string",
-            description: "user's role",
-            example: "user",
-          },
-        },
+            description: "Rol del usuario",
+            example: "User"
+          }
+        }
       },
       userCreate: {
         type: "object",
         properties: {
           password: {
             type: "string",
-            description: "user's password'",
-            example: "123456",
+            description: "Contraseña del usuario",
+            example: "123456"
           },
           name: {
             type: "string",
-            description: "user's name",
+            description: "Nombre del usuario",
             example: "Germán",
             required: true,
-            example: "Germán",
+            // example: "Germán", // esto lo comento porque creo que está repetido
           },
           email: {
             type: "string",
-            description: "user's email",
+            description: "Email del usuario",
             example: "test@gmail.com",
             required: true,
-            unique: true,
+            unique: true
           },
           imageUser: {
             type: "string",
@@ -67,9 +67,9 @@ module.exports = {
           },
           genre: {
             type: "string",
-            description: "user's genre",
+            description: "Género del usuario",
             required: true,
-            example: "male",
+            example: "Male"
           },
         },
       },
@@ -78,32 +78,32 @@ module.exports = {
         properties: {
           name: {
             type: "string",
-            description: "user's name",
-            example: "ger",
+            description: "Nombre del usuario",
+            example: "Ger"
           },
           email: {
             type: "string",
-            description: "user's email",
+            description: "Email del usuario",
             example: "test@gmail.com",
             required: true,
-            unique: true,
+            unique: true
           },
           imageUser: {
             type: "string",
             format: "binary",
-            example: "1657907225788-Resident Evil.jpg",
+            example: "1657907225788-Resident Evil.jpg"
           },
           genre: {
             type: "string",
-            description: "user's genre",
+            description: "Género del usuario",
             required: true,
-            example: "male",
+            example: "Other"
           },
         },
       },
       _id: {
         type: "objectId",
-        description: "User's id",
+        description: "ID del usuario",
         example: "629f5529328f820b7dfe17cf",
       },
       userLogin: {
@@ -111,18 +111,18 @@ module.exports = {
         properties: {
           email: {
             type: "string",
-            description: "email del usuario",
+            description: "Email del usuario",
             example: "mol@gmail.com",
-            required: true,
+            required: true
           },
           password: {
             type: "string",
-            description: "clave del usuario",
+            description: "Contraseña del usuario",
             example: "123456",
-            required: true,
-          },
-        },
-      },
-    },
-  },
-};
+            required: true
+          }
+        }
+      }
+    }
+  }
+}
