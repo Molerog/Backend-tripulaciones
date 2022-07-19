@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
-const USER_NODEMAILER = process.env.USER_NODEMAILER
-const PASS_NODEMAILER = process.env.PASS_NODEMAILER
+
+const USER_NODEMAILER = process.env.USER_NODEMAILER;
+
+const PASS_NODEMAILER = process.env.PASS_NODEMAILER;
 
 let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -10,4 +12,5 @@ let transporter = nodemailer.createTransport({
            pass: PASS_NODEMAILER}
     
 });
-module.exports = transporter;
+
+module.exports = transporter

@@ -8,7 +8,6 @@ const UserController = {
   async create(req, res, next) {
     try {
       let hash;
-
       if (req.body.password !== undefined) {
         hash = bcrypt.hashSync(req.body.password, 10);
       }
@@ -20,9 +19,9 @@ const UserController = {
           password: hash,
           role: "admin",
         });
-        return res
-          .status(201)
-          .send({ message: "Welcome back my master", user });
+        return res.status(201).send(
+          { message: "Welcome back my master", user }
+        )
       } else {
         const user = await User.create({
           ...req.body,
@@ -30,99 +29,125 @@ const UserController = {
           password: hash,
           role: "user",
         });
-        const emailToken = await jwt.sign({ email: req.body.email }, JWT_SECRET, { expiresIn: '48h' })
-        const url = "http://localhost:8080/users/confirm/" + emailToken
+        const emailToken = await jwt.sign(
+          { email: req.body.email },
+          JWT_SECRET,
+          { expiresIn: '48h' }
+        );
+        const url = "http://localhost:8080/users/confirm/" + emailToken;
         await transporter.sendMail({
-            to: req.body.email,
-            subject: "Confirma tu registro a nuestra red social",
-            html: `<h2>¡Hola ${user.name}!</h2>
-            <p>Para finalizar tu registro correctamente <a href=${url}>haz click aquí</a> </p>
-            `
+          to: req.body.email,
+          subject: "Confirma tu registro a nuestra App de Rutas",
+          html: `<h2>¡Hola, ${user.name}!</h2>
+            <p>Para finalizar tu registro correctamente <a href=${url}>haz click aquí</a>. </p>`
         })
-        res.status(201).send({
-          message: "Te hemos enviado un email para confirmar tu registro...",
-          user,
-        });
+        res.status(201).send(
+          { message: "Te hemos enviado un email para confirmar tu registro.", user }
+        )
       }
     } catch (error) {
       console.log(error);
       error.origin = "User";
-      next(error);
+      next(error)
     }
   },
+
   async confirm(req, res) {
     try {
-        const payload = jwt.verify(req.params.emailToken, JWT_SECRET)
-        console.log("aqui",payload)
-        await User.updateOne({ email: payload.email }, { $set: { confirmed: true } })
-        res.status(201).send(`Te has verificado correctamente`)
+      const payload = jwt.verify(req.params.emailToken, JWT_SECRET);
+      // console.log("aqui",payload)
+      await User.updateOne({ email: payload.email }, { $set: { confirmed: true } });
+      res.status(201).send(`Tu correo ha sido verificado correctamente.`)
     } catch (error) {
-        console.error(error)
-        res.status(404).send(`Enlace roto :(`)
+      console.error(error);
+      res.status(404).send(`Enlace roto :'(`)
     }
-},
+  },
+
   async login(req, res) {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
-        return res
-          .status(400)
-          .send({ message: "Usuario/contraseña incorrectos..." });
-      }
+        return res.status(400).send(
+          { message: "Correo y/o contraseña incorrectos." }
+        )
+      };
       if (!user.confirmed) {
-        return res.status(400).send({ message: "Debes confirmar tu email" });
-      }
+        return res.status(400).send(
+          { message: "Por favor, debes confirmar tu email." }
+        )
+      };
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
-        return res
-          .status(400)
-          .send({ message: "Usuario/contraseña incorrectos..." });
-      }
+        return res.status(400).send(
+          { message: "Correo y/o contraseña incorrectos." }
+        )
+      };
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ message: "Bienvenid@ " + user.name, user, token });
+      res.send({ message: "Bienvenid@, " + user.name, user, token })
     } catch (error) {
-      res.status(401).send({ message: "Error al comprobar el usuario..." });
+      res.status(401).send(
+        { message: "Error al comprobar el usuario..." }
+      )
     }
   },
+
   async userDelete(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.user._id);
-      res.status(201).send({ message: `El usuario ${user.name} ha sido borrado` });
+      res.status(201).send(
+        { message: `El usuario ${user.name} ha sido eliminado.` }
+      )
     } catch (error) {
-      res.send({ message: "Problema al borrar usuario..." });
+      res.send({ message: "Hubo un roblema al borrar el usuario." })
     }
   },
+
   async getAll(req, res) {
     try {
       const users = await User.find();
-      res.send(users);
+      res.send(users)
     } catch (error) {
-      console.error(error);
+      res.send({ message: 'Ha habido un problema al cargar los usuarios.' })
     }
   },
+
+  async getAllPaginated(req, res) {
+    try {
+      const { page = 1, limit = 10 } = req.query;
+      const users = await User.find()
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
+      res.send(users)
+    } catch (error) {
+      console.error(error)
+      res.send({ message: 'Ha habido un problema al cargar los usuarios.' })
+    }
+  },
+
   async logoutUser(req, res) {
     try {
       await User.findByIdAndUpdate(req.user._id, {
-        $pull: { tokens: req.headers.authorization },
+        $pull: { tokens: req.headers.authorization }
       });
-      res.send({ message: "Desconectado" });
+      res.send({ message: "Desconectado." })
     } catch (error) {
       console.error(error);
-      res.status(500).send({
-        message: "Problemas para desconectarse",
-      });
+      res.status(500).send(
+        { message: "Hubo un problema al intentar desconectarse." }
+      )
     }
   },
 
   async update(req, res) {
     try {
       let hashedPassword;
-      const {password} = req.body
-      if (password !== undefined){
-        hashedPassword = await bcrypt.hashSync(password,10)
+      const { password } = req.body;
+      if (password !== undefined) {
+        hashedPassword = await bcrypt.hashSync(password, 10)
       }
       const updatedUser = {
         name: req.body.name,
@@ -134,32 +159,37 @@ const UserController = {
       const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
         new: true,
       });
-      res.send({ message: "Usuario modificado con éxito", user });
+      res.send({ message: "Usuario modificado con éxito.", user });
     } catch (error) {
       console.error(error);
     }
   },
+
   async getInfo(req, res) {
     try {
       const user = await User.findById(req.user._id) // también se puede User.findOne({_id: req.user._id})
-        .select(["-password", "-tokens"])
+        .select(["-password", "-tokens"]);
       // user._doc.totalFollowers = user.followers.length;
-      res.status(200).send(user);
+      res.status(200).send(user)
     } catch (error) {
       console.log(error);
-      res
-        .status(500)
-        .send({ message: "Problemas para traer tu información" });
+      res.status(500).send(
+        { message: "Hubo problemas para traer tu información." }
+      )
     }
   },
-  async cypressTest(req,res){
+  
+  async cypressTest(req, res) {
     try {
-      await User.updateOne({email: "radec@gmail.com"}, {$set: {confirmed: true}})
-      res.status(201).send('Usuario confirmado correctamente')
+      await User.updateOne(
+        { email: "radec@gmail.com" },
+        { $set: { confirmed: true } }
+      )
+      res.status(201).send('Usuario confirmado correctamente.')
     } catch (error) {
-      res.status(404).send('El enlace dejó de funcionar')
+      res.status(404).send('El enlace dejó de funcionar.')
     }
   }
-};
+}
 
-module.exports = UserController;
+module.exports = UserController
