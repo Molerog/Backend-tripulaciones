@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const RouteSchema = new mongoose.Schema(
   {
@@ -15,11 +16,12 @@ const RouteSchema = new mongoose.Schema(
     duration: {
       type: Number,
     },
+    userId: { type: ObjectId, ref: 'User' },
     startingPoint: String,
     endingPoint: String,
     description: String,
     tags: [],
-
+    likes: [{ type: ObjectId }],
     pois: [
       {
         id: String,
@@ -31,7 +33,6 @@ const RouteSchema = new mongoose.Schema(
       },
     ],
   },
-  likes[{ type: ObjectId }],
 
   { timestamps: true }
 );

@@ -1,4 +1,5 @@
 const Route = require('../models/Route');
+const User = require('../models/User');
 const axios = require('axios');
 
 const URL_API = 'https://pilgrimtests.000webhostapp.com/mockapi/getall/';
@@ -21,12 +22,12 @@ const RouteController = {
           tags: [route.tags],
           pois: [
             {
-              id: route.id,
-              name: route.name,
-              description: route.description,
-              imagepath: route.image,
-              latitude: route.latitude,
-              longitude: route.longitude,
+              id: route.pois.id,
+              name: route.pois.name,
+              description: route.pois.description,
+              imagepath: route.pois.image,
+              latitude: route.pois.latitude,
+              longitude: route.pois.longitude,
             },
           ],
         });
@@ -63,6 +64,28 @@ const RouteController = {
       res
         .status(400)
         .send({ message: 'Ha habido un problema al cargar las rutas' });
+    }
+  },
+  async like(req, res) {
+    try {
+      const exist = await Route.findById(req.params._id);
+      if (!exist.likes.includes(req.user._id)) {
+        const route = await Route.findByIdAndUpdate(
+          req.params._id,
+          { $push: { likes: req.user._id } },
+          { new: true }
+        );
+        await User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { wishList: req.params._id } },
+          { new: true }
+        );
+        res.send(route);
+      } else {
+        res.status(400).send({ message: 'No puedes dar más likes' });
+      }
+    } catch (error) {
+      res.status(500).send({ message: 'Hubo un problema dando un like' });
     }
   },
 };
