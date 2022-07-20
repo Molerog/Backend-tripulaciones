@@ -14,9 +14,10 @@ const RouteController = {
     async getAllRoutesPaginated(req, res) {
         try {
           const { page = 1, limit = 10 } = req.query;
-          const routes = await Route.find()
+          const routes = await Route.find({})
             .limit(limit * 1)
             .skip((page - 1) * limit);
+            console.log("aqui",routes.length)
           res.status(200).send(routes)
         } catch (error) {
           console.error(error)
