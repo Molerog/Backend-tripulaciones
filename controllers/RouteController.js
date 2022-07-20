@@ -2,7 +2,7 @@ const Route = require('../models/Route');
 const User = require('../models/User');
 const axios = require('axios');
 
-const URL_API = 'https://pilgrimtests.000webhostapp.com/mockapi/getall/';
+const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
 
 const RouteController = {
   async create(req, res, next) {
