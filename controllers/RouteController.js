@@ -84,7 +84,29 @@ const RouteController = {
           { message: 'Ha habido un problema al cargar la ruta' }
         )
     }
-}
+},
+async dislike(req, res) {
+  try {
+    const exist = await Route.findById(req.params._id);
+    if (exist.likes.includes(req.user._id)) {
+      const route = await Route.findByIdAndUpdate(
+        req.params._id,
+        { $pull: { likes: req.user._id } },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        req.user._id,
+        { $pull: { likes: req.params._id } },
+        { new: true }
+      );
+      res.status(200).send({ message: 'Me gusta quitado', route });
+    } else {
+      res.status(400).send({ message: 'No puedes quitar más likes' });
+    }
+  } catch (error) {
+    res.status(500).send({ message: 'Hubo un problema quitando un like' });
+  }
+},
 };
 
 module.exports = RouteController
