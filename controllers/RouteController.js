@@ -1,6 +1,11 @@
 const Route = require('../models/Route');
 const User = require('../models/User');
 const axios = require('axios');
+const mongoose = require('mongoose');
+const db = mongoose.connection;
+
+
+
 
 const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
 
@@ -8,7 +13,7 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-      db.collection.remove({routes})
+      await db.dropCollection("routes")
       const routes = await Route.create(...result.data)
       res.status(201).send(routes);
     } catch (error) {
