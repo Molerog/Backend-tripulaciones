@@ -18,7 +18,8 @@ module.exports = {
                 }
               }
             }
-          }
+          },
+          500: { description: "Error de servidor" }
         }
       },
 
