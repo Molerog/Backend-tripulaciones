@@ -23,8 +23,8 @@ const typeError = (err, req, res, next) => {
         res.status(500).send('Ha habido un problema al crear el usuario.');
     } else if (errOrigin === 'Comment'){
         res.status(500).send('Ha habido un problema al crear el comentario.');
-    } else if (errOrigin === 'Post') {
-        res.status(500).send('Ha habido un problema al crear la publicación.')
+    } else if (errOrigin === 'Route') {
+        res.status(500).send('Ha habido un problema al crear la ruta.')
     } else {
         res.status(500).send('Ha habido un error de sintaxis.');
     }  

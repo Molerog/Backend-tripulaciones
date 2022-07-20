@@ -1,4 +1,4 @@
-require ('./seeders/loadRoutes')
+// require ('./seeders/loadRoutes')
 require("dotenv").config();
 const express = require("express");
 const { typeError } = require('./middleware/errors');
@@ -19,10 +19,6 @@ app.use(cors());
 dbConnection();
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
-
-
-
-// app.use('/routes',require ('./seeders/loadRoutes'));
 
 app.use('/users', require ('./routes/users'));
 app.use('/routes', require ('./routes/routes'));

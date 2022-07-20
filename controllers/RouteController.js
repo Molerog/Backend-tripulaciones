@@ -1,6 +1,45 @@
 const Route = require ("../models/Route");
+const axios = require("axios");
+
+const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
 
 const RouteController = {
+  async create(req,res,next){
+    try {
+        const result = await axios.get(URL_API);
+        console.log("hola cabezahuevo");
+        const routes = result.data;        
+        routes.map(route=>{return(
+          Route.create({
+            name: route.name,
+            difficulty: route.difficulty,
+            imagepath: route.image,
+            duration: route.duration,
+            startingPoint: route.startingPoint,
+            endingPoint: route.endingPoint,
+            description: route.description,
+            tags: [route.tags],
+            pois: [
+              {
+                id: route.id,
+                name: route.name,
+                description: route.description,
+                imagepath: route.image,
+                latitude: route.latitude,
+                longitude: route.longitude,
+              },
+            ],
+          })) 
+         } )
+        
+        res.status(201).send(routes)
+    } catch (error) {
+      console.log(error);
+      error.origin = "Route";
+      next(error);
+    }
+},
+
     async getAll(req,res){
         try {
           const routes =  await Route.find({})
