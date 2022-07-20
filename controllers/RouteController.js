@@ -1,5 +1,6 @@
-const Route = require("../models/Route");
-const axios = require("axios");
+const Route = require('../models/Route');
+const User = require('../models/User');
+const axios = require('axios');
 
 const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
 
@@ -38,7 +39,29 @@ const RouteController = {
       console.error(error);
       res
         .status(400)
-        .send({ message: "Ha habido un problema al cargar las rutas" });
+        .send({ message: 'Ha habido un problema al cargar las rutas' });
+    }
+  },
+  async like(req, res) {
+    try {
+      const exist = await Route.findById(req.params._id);
+      if (!exist.likes.includes(req.user._id)) {
+        const route = await Route.findByIdAndUpdate(
+          req.params._id,
+          { $push: { likes: req.user._id } },
+          { new: true }
+        );
+        await User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { wishList: req.params._id } },
+          { new: true }
+        );
+        res.send(route);
+      } else {
+        res.status(400).send({ message: 'No puedes dar más likes' });
+      }
+    } catch (error) {
+      res.status(500).send({ message: 'Hubo un problema dando un like' });
     }
   },
 };
