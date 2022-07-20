@@ -8,12 +8,36 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-      const routes = await Route.create(...result.data);
+      console.log('hola cabezahuevo');
+      const routes = result.data;
+      routes.map(route => {
+        return Route.create({
+          name: route.name,
+          difficulty: route.difficulty,
+          imagepath: route.image,
+          duration: route.duration,
+          startingPoint: route.startingPoint,
+          endingPoint: route.endingPoint,
+          description: route.description,
+          tags: [route.tags],
+          pois: [
+            {
+              id: route.pois.id,
+              name: route.pois.name,
+              description: route.pois.description,
+              imagepath: route.pois.image,
+              latitude: route.pois.latitude,
+              longitude: route.pois.longitude
+            }
+          ]
+        })
+      });
+
       res.status(201).send(routes);
     } catch (error) {
       console.log(error);
-      error.origin = "Route";
-      next(error);
+      error.origin = 'Route';
+      next(error)
     }
   },
 
@@ -21,12 +45,13 @@ const RouteController = {
     try {
       const routes = await Route.find({});
       console.log(routes.length);
-      res.status(200).send(routes);
+      res.status(200).send(routes)
     } catch (error) {
       console.log(err);
-      res.status(500).send({ message: "Hubo un problema cargando las rutas" });
+      res.status(500).send({ message: 'Hubo un problema cargando las rutas' })
     }
   },
+
   async getAllRoutesPaginated(req, res) {
     try {
         const numberRoutes=await Route.count()
@@ -38,11 +63,12 @@ const RouteController = {
       res.status(200).send({routes,numberRoutes});
     } catch (error) {
       console.error(error);
-      res
-        .status(400)
-        .send({ message: 'Ha habido un problema al cargar las rutas' });
+      res.status(400).send(
+        { message: 'Ha habido un problema al cargar las rutas' }
+      )
     }
   },
+
   async like(req, res) {
     try {
       const exist = await Route.findById(req.params._id);
@@ -57,14 +83,31 @@ const RouteController = {
           { $push: { wishList: req.params._id } },
           { new: true }
         );
-        res.send(route);
+        res.send(route)
       } else {
-        res.status(400).send({ message: 'No puedes dar más likes' });
+        res.status(400).send(
+          { message: 'No puedes dar más likes' }
+        )
       }
     } catch (error) {
-      res.status(500).send({ message: 'Hubo un problema dando un like' });
+      res.status(500).send(
+        { message: 'Hubo un problema dando un like' }
+      )
     }
   },
+
+  async getById(req, res) {
+    try {
+        const route = await Route.findById(req.params._id)
+            // .populate(""); añadir lo que queramos que salga en routeDetail
+        res.send(route)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(
+          { message: 'Ha habido un problema al cargar la ruta' }
+        )
+    }
+}
 };
 
-module.exports = RouteController;
+module.exports = RouteController
