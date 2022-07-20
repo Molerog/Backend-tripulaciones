@@ -24,15 +24,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Por favor, selecciona un género.'],
     },
-    userId: {
-      type: ObjectId,
-      ref: 'User',
-    },
+    // userId: {
+    //   type: ObjectId,
+    //   ref: 'User',
+    // },
     role: String,
     confirmed: Boolean,
     imagepath: String,
     tokens: [],
-    likes: [{ type: ObjectId }],
+    likes: [{ type: ObjectId, ref: 'Route' }],
   },
   { timestamps: true }
 );
