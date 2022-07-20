@@ -10,7 +10,6 @@ const RouteSchema = new mongoose.Schema(
       },
       imagepath: {
         type: String,
-        required:[true, 'Por favor, introduce una contraseña.']
       },
       duration: {
         type: Number,
