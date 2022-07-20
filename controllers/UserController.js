@@ -87,7 +87,7 @@ const UserController = {
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ message: "Bienvenid@, " + user.name, user, token })
+      res.status(201).send({ message: "Bienvenid@, " + user.name, user, token })
     } catch (error) {
       res.status(401).send(
         { message: "Error al comprobar el usuario..." }
@@ -102,16 +102,16 @@ const UserController = {
         { message: `El usuario ${user.name} ha sido eliminado.` }
       )
     } catch (error) {
-      res.send({ message: "Hubo un roblema al borrar el usuario." })
+      res.status(401).send({ message: "Hubo un roblema al borrar el usuario." })
     }
   },
 
   async getAll(req, res) {
     try {
       const users = await User.find();
-      res.send(users)
+      res.status(200).send(users)
     } catch (error) {
-      res.send({ message: 'Ha habido un problema al cargar los usuarios.' })
+      res.status(400).send({ message: 'Ha habido un problema al cargar los usuarios.' })
     }
   },
 
@@ -121,10 +121,10 @@ const UserController = {
       const users = await User.find()
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      res.send(users)
+      res.status(200).send(users)
     } catch (error) {
       console.error(error)
-      res.send({ message: 'Ha habido un problema al cargar los usuarios.' })
+      res.status(400).send({ message: 'Ha habido un problema al cargar los usuarios.' })
     }
   },
 
@@ -133,7 +133,7 @@ const UserController = {
       await User.findByIdAndUpdate(req.user._id, {
         $pull: { tokens: req.headers.authorization }
       });
-      res.send({ message: "Desconectado." })
+      res.status(200).send({ message: "Desconectado." })
     } catch (error) {
       console.error(error);
       res.status(500).send(
@@ -157,11 +157,14 @@ const UserController = {
         genre: req.body.genre
       };
       const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
-        new: true,
+        new: true
       });
-      res.send({ message: "Usuario modificado con éxito.", user });
+      res.status(201).send({ message: "Usuario modificado con éxito.", user });
     } catch (error) {
       console.error(error);
+      res.status(400).send(
+        { message: "Hubo un problema al intentar modificar el usuario." }
+      )
     }
   },
 
