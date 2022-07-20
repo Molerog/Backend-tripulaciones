@@ -7,7 +7,7 @@ const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
   const res = await axios.get(URL_API);
   console.log("hola cabezahuevo");
   const routes = res.data;
-  for (const route of routes) {
+  routes.map(route=>{return(
     Route.create({
       name: route.name,
       difficulty: route.difficulty,
@@ -27,8 +27,9 @@ const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
           longitude: route.longitude,
         },
       ],
-    });
-  }
-};
+    })) 
+   } )}
+  
+
 prueba();
 
