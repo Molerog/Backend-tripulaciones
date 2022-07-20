@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-const Route = require("../models/Route");
-const axios = require("axios");
-=======
 const Route = require('../models/Route');
 const User = require('../models/User');
 const axios = require('axios');
->>>>>>> 80b4dc8e5da0b57df48e90e45a373480bf04412c
 
 const URL_API = 'https://pilgrimtests.000webhostapp.com/mockapi/getall/';
 
@@ -13,10 +8,6 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-<<<<<<< HEAD
-      // await db.dropCollection("routes");
-      const routes = await Route.create(...result.data);
-=======
       console.log('hola cabezahuevo');
       const routes = result.data;
       routes.map(route => {
@@ -42,7 +33,6 @@ const RouteController = {
         });
       });
 
->>>>>>> 80b4dc8e5da0b57df48e90e45a373480bf04412c
       res.status(201).send(routes);
     } catch (error) {
       console.log(error);
@@ -58,11 +48,7 @@ const RouteController = {
       res.status(200).send(routes);
     } catch (error) {
       console.log(err);
-<<<<<<< HEAD
-      res.status(500).send({ message: "Hubo un problema cargando las rutas" });
-=======
       res.status(500).send({ message: 'Hubo un problema cargando las rutas' });
->>>>>>> 80b4dc8e5da0b57df48e90e45a373480bf04412c
     }
   },
   async getAllRoutesPaginated(req, res) {
@@ -71,19 +57,12 @@ const RouteController = {
       const routes = await Route.find({})
         .limit(limit * 1)
         .skip((page - 1) * limit);
-<<<<<<< HEAD
-      console.log("aqui", routes.length);
-=======
       console.log('aqui', routes.length);
->>>>>>> 80b4dc8e5da0b57df48e90e45a373480bf04412c
       res.status(200).send(routes);
     } catch (error) {
       console.error(error);
       res
         .status(400)
-<<<<<<< HEAD
-        .send({ message: "Ha habido un problema al cargar las rutas" });
-=======
         .send({ message: 'Ha habido un problema al cargar las rutas' });
     }
   },
@@ -107,7 +86,6 @@ const RouteController = {
       }
     } catch (error) {
       res.status(500).send({ message: 'Hubo un problema dando un like' });
->>>>>>> 80b4dc8e5da0b57df48e90e45a373480bf04412c
     }
   },
 };
