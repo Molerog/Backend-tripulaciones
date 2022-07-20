@@ -21,12 +21,12 @@ const RouteController = {
             tags: [route.tags],
             pois: [
               {
-                id: route.id,
-                name: route.name,
-                description: route.description,
-                imagepath: route.image,
-                latitude: route.latitude,
-                longitude: route.longitude,
+                id: route.pois.id,
+                name: route.pois.name,
+                description: route.pois.description,
+                imagepath: route.pois.image,
+                latitude: route.pois.latitude,
+                longitude: route.pois.longitude,
               },
             ],
           })) 
