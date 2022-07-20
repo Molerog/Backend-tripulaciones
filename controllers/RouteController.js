@@ -4,6 +4,7 @@ const RouteController = {
     async getAll(req,res){
         try {
           const routes =  await Route.find({})
+          console.log(routes.length)
           res.status(200).send(routes)
         } catch (error) {
             console.log(err)
