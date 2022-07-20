@@ -32,6 +32,7 @@ const RouteController = {
           ]
         })
       });
+
       res.status(201).send(routes);
     } catch (error) {
       console.log(error);
