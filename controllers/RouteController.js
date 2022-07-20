@@ -8,31 +8,7 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-      console.log('hola cabezahuevo');
-      const routes = result.data;
-      routes.map(route => {
-        return Route.create({
-          name: route.name,
-          difficulty: route.difficulty,
-          imagepath: route.image,
-          duration: route.duration,
-          startingPoint: route.startingPoint,
-          endingPoint: route.endingPoint,
-          description: route.description,
-          tags: [route.tags],
-          pois: [
-            {
-              id: route.pois.id,
-              name: route.pois.name,
-              description: route.pois.description,
-              imagepath: route.pois.image,
-              latitude: route.pois.latitude,
-              longitude: route.pois.longitude
-            }
-          ]
-        })
-      });
-
+      const routes = await Route.create(...result.data)
       res.status(201).send(routes);
     } catch (error) {
       console.log(error);
