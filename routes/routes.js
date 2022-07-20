@@ -1,13 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {authentication} = require('../middleware/authentication');
+const { authentication } = require("../middleware/authentication");
 
-const RouteController = require ("../controllers/RouteController");
+const RouteController = require("../controllers/RouteController");
 
-router.post('/', RouteController.create)
-router.get('/',authentication, RouteController.getAll);
-router.get('/allRoutesPage',authentication, RouteController.getAllRoutesPaginated);
-
-
+router.post("/", RouteController.create);
+router.get("/", authentication, RouteController.getAll);
+router.get(
+  "/allRoutesPage",
+  authentication,
+  RouteController.getAllRoutesPaginated
+);
+router.put("/likes/:_id", authentication, RouteController.like);
 
 module.exports = router;
