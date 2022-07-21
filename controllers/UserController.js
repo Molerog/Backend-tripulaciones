@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -100,6 +101,7 @@ const UserController = {
   async userDelete(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.user._id);
+      await Comment.deleteMany({ userId: req.user._id })
       res.status(201).send(
         { message: `El usuario ${user.name} ha sido eliminado` }
       )
