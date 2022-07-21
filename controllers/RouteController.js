@@ -5,14 +5,17 @@ const mongoose = require('mongoose');
 
 const db = mongoose.connection;
 
-const URL_API = "https://pilgrimtests.000webhostapp.com/mockapi/getall/";
+const URL_API = "https://api-routes-data.herokuapp.com/getRoutes/";
 
 const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
+      const dataString = result.data.replace(/ NaN,/g, ' 0,');
+      const dataJSON = JSON.parse(dataString)
       await db.dropCollection("routes");
-      const routes = await Route.create(...result.data);
+      const routes = await Route.create(...dataJSON);
+      console.log(routes)
       res.status(201).send(routes)
     } catch (error) {
       console.log(error);
