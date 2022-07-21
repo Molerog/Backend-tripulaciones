@@ -19,8 +19,8 @@ const CommentController = {
         } catch (error) {
             console.log("holi")
             console.error(error)
-            // error.origin = 'comment crear'
-            // next(error)
+            error.origin = 'comment crear'
+            next(error)
 
         }
     },
