@@ -20,6 +20,10 @@ const RouteSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'Comment'
   }],
+  scoresId: [{
+    type: ObjectId,
+    ref: 'Score'
+}],
     startingPoint: String,
     endingPoint: String,
     description: String,

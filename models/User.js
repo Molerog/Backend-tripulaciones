@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'Comment'
   }],
+  scoresId: [{
+    type: ObjectId,
+    ref: 'Score'
+}],
     role: String,
     confirmed: Boolean,
     imagepath: String,
