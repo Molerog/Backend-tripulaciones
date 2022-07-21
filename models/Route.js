@@ -15,6 +15,21 @@ const RouteSchema = new mongoose.Schema(
     duration: {
       type: Number
     },
+    description_es:{
+      type: String
+    },
+    transport:{
+      type: String
+    },
+    type:{
+      type:String
+    },
+    url:{
+      type:String
+    },
+    image:{
+      type:String
+    },
     userId: { type: ObjectId, ref: 'User' },
     commentsId: [{
       type: ObjectId,
@@ -29,7 +44,7 @@ const RouteSchema = new mongoose.Schema(
     description: String,
     tags: [],
     likes: [{ type: ObjectId }],
-    pois: [
+    poi: [
       {
         id: String,
         name: String,
