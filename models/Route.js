@@ -16,6 +16,10 @@ const RouteSchema = new mongoose.Schema(
       type: Number
     },
     userId: { type: ObjectId, ref: 'User' },
+    commentsId: [{
+      type: ObjectId,
+      ref: 'Comment'
+  }],
     startingPoint: String,
     endingPoint: String,
     description: String,

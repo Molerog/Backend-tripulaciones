@@ -24,10 +24,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Por favor, selecciona un género.']
     },
-    // userId: {
-    //   type: ObjectId,
-    //   ref: 'User',
-    // },
+    commentsId: [{
+      type: ObjectId,
+      ref: 'Comment'
+  }],
     role: String,
     confirmed: Boolean,
     imagepath: String,
