@@ -42,15 +42,15 @@ const ScoreController = {
 
         }
     },
-    // async delete(req, res) {
-    //     try {
-    //         const comment = await Comment.findByIdAndDelete(req.params._id)
-    //         res.status(200).send({ message: `Comentario ${comment.body} ha sido borrado`, comment })
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.status(500).send({ message: 'Problema para borrar el comentario' })
-    //     }
-    // },
+    async delete(req, res) {
+        try {
+            const score = await Score.findByIdAndDelete(req.params._id)
+            res.status(200).send({ message: `Tu puntuación ha sido borrada`, score })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send({ message: 'Problema para borrar la puntuación' })
+        }
+    },
    
 }
 module.exports = ScoreController;
