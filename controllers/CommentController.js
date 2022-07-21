@@ -17,9 +17,10 @@ const CommentController = {
             });
             res.status(201).send({ message: 'Se creó tu comentario!', comment })
         } catch (error) {
+            console.log("holi")
             console.error(error)
-            error.origin = 'comment crear'
-            next(error)
+            // error.origin = 'comment crear'
+            // next(error)
 
         }
     },

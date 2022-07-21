@@ -3,7 +3,7 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const CommentSchema = new mongoose.Schema({
     body: String,
-    image: String,
+    imagepath: String,
     userId: {
         type: ObjectId,
         ref: 'User'

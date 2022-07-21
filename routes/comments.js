@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const CommentController = require('../controllers/CommentController');
-const { authentication} = require("../middlewares/authentication");
+const { authentication} = require("../middleware/authentication");
 const {uploadCommentImages} = require('../middleware/multer');
 
 
