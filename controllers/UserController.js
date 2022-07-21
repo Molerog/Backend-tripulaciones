@@ -9,7 +9,7 @@ const UserController = {
     try {
       let hash;
       if (req.body.password !== undefined) {
-        hash = bcrypt.hashSync(req.body.password, 10);
+        hash = bcrypt.hashSync(req.body.password, 10)
       }
       if (req.file) req.body.imagepath = req.file.filename;
       if (req.body.email === "moltorger@gmail.com") {
@@ -17,7 +17,7 @@ const UserController = {
           ...req.body,
           confirmed: true,
           password: hash,
-          role: "admin",
+          role: "admin"
         });
         return res.status(201).send(
           { message: "Welcome back my master", user }
@@ -27,7 +27,7 @@ const UserController = {
           ...req.body,
           confirmed: false,
           password: hash,
-          role: "user",
+          role: "user"
         });
         const emailToken = await jwt.sign(
           { email: req.body.email },
@@ -42,7 +42,7 @@ const UserController = {
             <p>Para finalizar tu registro correctamente <a href=${url}>haz click aquí</a>. </p>`
         })
         res.status(201).send(
-          { message: "Te hemos enviado un email para confirmar tu registro.", user }
+          { message: "Te hemos enviado un email para confirmar tu registro", user }
         )
       }
     } catch (error) {
@@ -69,28 +69,30 @@ const UserController = {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res.status(400).send(
-          { message: "Correo y/o contraseña incorrectos." }
+          { message: "Correo y/o contraseña incorrectos" }
         )
       };
       if (!user.confirmed) {
         return res.status(400).send(
-          { message: "Por favor, debes confirmar tu email." }
+          { message: "Por favor, debes confirmar tu email" }
         )
       };
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
         return res.status(400).send(
-          { message: "Correo y/o contraseña incorrectos." }
+          { message: "Correo y/o contraseña incorrectos" }
         )
       };
       const token = jwt.sign({ _id: user._id }, JWT_SECRET);
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.status(201).send({ message: "Bienvenid@, " + user.name, user, token })
+      res.status(201).send(
+        { message: "Bienvenid@, " + user.name, user, token }
+      )
     } catch (error) {
       res.status(401).send(
-        { message: "Error al comprobar el usuario..." }
+        { message: "Error al comprobar el usuario" }
       )
     }
   },
@@ -99,10 +101,10 @@ const UserController = {
     try {
       const user = await User.findByIdAndDelete(req.user._id);
       res.status(201).send(
-        { message: `El usuario ${user.name} ha sido eliminado.` }
+        { message: `El usuario ${user.name} ha sido eliminado` }
       )
     } catch (error) {
-      res.status(401).send({ message: "Hubo un roblema al borrar el usuario." })
+      res.status(401).send({ message: "Hubo un roblema al borrar el usuario" })
     }
   },
 
@@ -124,7 +126,7 @@ const UserController = {
       res.status(200).send(users)
     } catch (error) {
       console.error(error)
-      res.status(400).send({ message: 'Ha habido un problema al cargar los usuarios.' })
+      res.status(400).send({ message: 'Ha habido un problema al cargar los usuarios' })
     }
   },
 
@@ -133,11 +135,11 @@ const UserController = {
       await User.findByIdAndUpdate(req.user._id, {
         $pull: { tokens: req.headers.authorization }
       });
-      res.status(200).send({ message: "Desconectado." })
+      res.status(200).send({ message: "Desconectado" })
     } catch (error) {
       console.error(error);
       res.status(500).send(
-        { message: "Hubo un problema al intentar desconectarse." }
+        { message: "Hubo un problema al intentar desconectarse" }
       )
     }
   },
@@ -159,11 +161,13 @@ const UserController = {
       const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
         new: true
       });
-      res.status(201).send({ message: "Usuario modificado con éxito.", user });
+      res.status(201).send(
+        { message: "Usuario modificado con éxito", user }
+      )
     } catch (error) {
       console.error(error);
       res.status(400).send(
-        { message: "Hubo un problema al intentar modificar el usuario." }
+        { message: "Hubo un problema al intentar modificar el usuario" }
       )
     }
   },
@@ -177,20 +181,20 @@ const UserController = {
     } catch (error) {
       console.log(error);
       res.status(500).send(
-        { message: "Hubo problemas para traer tu información." }
+        { message: "Hubo problemas para traer tu información" }
       )
     }
   },
-  
+
   async cypressTest(req, res) {
     try {
       await User.updateOne(
         { email: "radec@gmail.com" },
         { $set: { confirmed: true } }
       )
-      res.status(201).send('Usuario confirmado correctamente.')
+      res.status(201).send('Usuario confirmado correctamente')
     } catch (error) {
-      res.status(404).send('El enlace dejó de funcionar.')
+      res.status(404).send('El enlace dejó de funcionar')
     }
   }
 };

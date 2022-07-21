@@ -10,7 +10,6 @@ let transporter = nodemailer.createTransport({
     secure: true,
     auth: {user: USER_NODEMAILER, 
            pass: PASS_NODEMAILER}
-    
 });
 
 module.exports = transporter

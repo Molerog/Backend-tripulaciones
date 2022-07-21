@@ -4,16 +4,16 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 const RouteSchema = new mongoose.Schema(
   {
     name: {
-      type: String,
+      type: String
     },
     difficulty: {
-      type: String,
+      type: String
     },
     imagepath: {
-      type: String,
+      type: String
     },
     duration: {
-      type: Number,
+      type: Number
     },
     userId: { type: ObjectId, ref: 'User' },
     startingPoint: String,
@@ -28,14 +28,13 @@ const RouteSchema = new mongoose.Schema(
         description: String,
         imagepath: String,
         latitude: Number,
-        longitude: Number,
-      },
-    ],
+        longitude: Number
+      }
+    ]
   },
-
   { timestamps: true }
 );
 
 const Route = mongoose.model('Route', RouteSchema);
 
-module.exports = Route;
+module.exports = Route
