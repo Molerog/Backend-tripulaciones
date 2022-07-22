@@ -46,8 +46,8 @@ const ScoreController = {
 
     async getAll(req, res) {
         try {
-            const scores = await Score.find();
-            res.status(200).send({ scores })
+            const scores = await Score.find().populate("userId");
+            res.status(200).send({ scores})
         } catch (error) {
             console.log(error);
             res.status(500).send(
