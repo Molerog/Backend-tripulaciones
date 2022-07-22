@@ -66,7 +66,7 @@ const RouteController = {
         );
         await User.findByIdAndUpdate(
           req.user._id,
-          { $push: { wishList: req.params._id } },
+          { $push: { likes: req.params._id } },
           { new: true }
         );
         res.send(route)

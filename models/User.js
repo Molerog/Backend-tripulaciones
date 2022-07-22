@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'Por favor, introduce tu nombre.'],
       minLength: [3, 'Por favor, introduce un nombre de más de 3 caracteres.']
     },
+
     email: {
       type: String,
       unique: [true, 'Este email ya está regostrado.'],
@@ -16,27 +17,36 @@ const UserSchema = new mongoose.Schema(
       validate: [isEmail, 'Por favor, introduce un email válido.'],
       lowercase: [true, 'Por favor, introduce sólo minúsculas.']
     },
+
     password: {
       type: String,
       required: [true, 'Por favor, introduce una contraseña.']
     },
+
     genre: {
       type: String,
       required: [true, 'Por favor, selecciona un género.']
     },
+
+    imagepath: String,
+    role: String,
+    confirmed: Boolean,
+    tokens: [],
+
     commentsId: [{
       type: ObjectId,
       ref: 'Comment'
-  }],
-  scoresId: [{
-    type: ObjectId,
-    ref: 'Score'
-}],
-    role: String,
-    confirmed: Boolean,
-    imagepath: String,
-    tokens: [],
-    likes: [{ type: ObjectId, ref: 'Route' }]
+    }],
+
+    likes: [{
+      type: ObjectId,
+      ref: 'Route'
+    }],
+
+    scoresId: [{
+      type: ObjectId,
+      ref: 'Score'
+    }]
   },
   { timestamps: true }
 );
