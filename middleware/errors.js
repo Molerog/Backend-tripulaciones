@@ -18,15 +18,17 @@ const typeError = (err, req, res, next) => {
     const errOrigin = err.origin;
     if(err.name === 'ValidationError') return err = handleValidationError(err, res);
     else if (err.code === 11000){
-        res.status(400).send({message: 'Este email ya ha sido registrado.'})
+        res.status(400).send(
+            {message: 'Este email ya ha sido registrado.'}
+        )
     } else if (errOrigin === 'User'){
-        res.status(500).send('Ha habido un problema al crear el usuario.');
+        res.status(500).send('Ha habido un problema al crear el usuario.')
     } else if (errOrigin === 'Comment'){
-        res.status(500).send('Ha habido un problema al crear el comentario.');
+        res.status(500).send('Ha habido un problema al crear el comentario.')
     } else if (errOrigin === 'Route') {
         res.status(500).send('Ha habido un problema al crear la ruta.')
     } else {
-        res.status(500).send('Ha habido un error de sintaxis.');
+        res.status(500).send('Ha habido un error de sintaxis.')
     }  
 };
 
