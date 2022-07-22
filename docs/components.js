@@ -12,7 +12,7 @@ module.exports = {
       //   name: "access_token",
       // }
     },
-    
+
     schemas: {
       userGet: {
         type: "object",
@@ -124,7 +124,8 @@ module.exports = {
           }
         }
       }
-
+    },
+    schema: {
       routeGet: {
         type: "object",
         properties: {
@@ -162,113 +163,9 @@ module.exports = {
             type: "string",
             description: "Tipo de ruta",
             example: "Històrica"
-          },
-          commentsId: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                _id: {
-                  type: "objectId",
-                  description: "ID del comentario de la ruta",
-                  example: "62da9f77ce3eede35a8f8ed6"
-                },
-                body: {
-                  type: "string",
-                  description: "Cuerpo del comentario de la ruta",
-                  example: "hola probando el value"
-                },
-                userId: {
-                  type: "object",
-                  properties: {
-                    _id: {
-                      type: "objectId",
-                      description: "ID del usuario",
-                      example: "62da83285999b1268a055f49"
-                    },
-                    name: {
-                      type: "string",
-                      description: "Nombre del usuario",
-                      example: "Germán"
-                    },
-                    email: {
-                      type: "string",
-                      description: "Email del usuario",
-                      example: "moltorger@gmail.com"
-                    },
-                    password: {
-                      type: "string",
-                      description: "Contraseña hasheada del usuario",
-                      example: "$2a$10$u3QYAjM9If/2XMZFRj4ds.I7TPhmXI2PPlSFkWwgbwgqQd7/MsDnC"
-                    },
-                    genre: {
-                      type: "string",
-                      description: "Género del usuario",
-                      example: "men"
-                    },
-                    commentsId: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      }
-                    },
-                    scoresId: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      }
-                    },
-                    role: {
-                      type: "string",
-                      description: "Rol del usuario",
-                      example: "Admin"
-                    },
-                    confirmed: {
-                      type: "boolean"
-                    },
-                    imagepath: {
-                      type: "string",
-                      description: "Imagen del usuario",
-                      example: "1658504117342-Radec.jpg"
-                    },
-                    tokens: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      }
-                    },
-                    likes: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      }
-                    }
-                  }
-                },
-                routeId: {
-                  type: "string",
-                  description: "ID de la ruta",
-                  example: "62da9c9598a6c100c33431c5"
-                },
-                likes: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  }
-                },
-                scoresId: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  }
-                }
-              }
-              // queda más por poner pero no sé si es que no lo estoy haciendo bien o es que es así de difícil
-            },
-            description: "Comentarios de la ruta",
-            // example: "" No sé qué poner aquí
-          },
+          }
         }
+        // queda más por poner pero no sé si es que no lo estoy haciendo bien o es que es así de difícil
       }
     }
   }
