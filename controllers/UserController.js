@@ -182,7 +182,8 @@ const UserController = {
   async getInfo(req, res) {
     try {
       const user = await User.findById(req.user._id) // también se puede User.findOne({_id: req.user._id})
-        .select(["-password", "-tokens"]);
+      .populate("likes")
+      // .select(["-password", "-tokens"])
       // user._doc.totalFollowers = user.followers.length;
       res.status(200).send(user)
     } catch (error) {

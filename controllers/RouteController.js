@@ -26,7 +26,8 @@ const RouteController = {
 
   async getAll(req, res) {
     try {
-      const routes = await Route.find({});
+      const routes = await Route.find({})
+      .populate('userId')
       console.log(routes.length);
       res.status(200).send(routes)
     } catch (error) {
