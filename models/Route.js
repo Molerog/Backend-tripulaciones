@@ -45,7 +45,7 @@ const RouteSchema = new mongoose.Schema(
     poi: [{
       id: String,
       name: String,
-      description: String,
+      description_es: String,
       imagepath: String,
       latitude: Number,
       longitude: Number
