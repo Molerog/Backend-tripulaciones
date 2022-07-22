@@ -11,10 +11,10 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-      const dataString = result.data.replace(/ NaN,/g, ' 0,');
-      const dataJSON = JSON.parse(dataString)
+      // const dataString = result.data.replace(/ NaN,/g, ' 0,');
+      // const dataJSON = JSON.parse(dataString)
       await db.dropCollection("routes");
-      const routes = await Route.create(...dataJSON);
+      const routes = await Route.create(...result.data);
       console.log(routes)
       res.status(201).send(routes)
     } catch (error) {
@@ -44,7 +44,6 @@ const RouteController = {
       const routes = await Route.find({})
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      console.log("aqui", routes.length);
       res.status(200).send(
         { routes, numberRoutes }
       )
@@ -85,8 +84,13 @@ const RouteController = {
 
   async getById(req, res) {
     try {
-      const route = await Route.findById(req.params._id);
-      // .populate(""); añadir lo que queramos que salga en routeDetail
+      const route = await Route.findById(req.params._id)
+      .populate({
+        path:"commentsId",
+        populate: {
+          path: "userId"
+        }
+      })
       res.send(route)
     } catch (error) {
       console.error(error);

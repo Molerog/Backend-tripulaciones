@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Comment = require("../models/Comment");
 const Score = require("../models/Score");
+const Route = require("../models/Route");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
