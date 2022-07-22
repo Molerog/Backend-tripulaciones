@@ -20,11 +20,8 @@ dbConnection();
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 app.use('/users', require ('./routes/users'));
-
 app.use('/routes', require ('./routes/routes'));
-
 app.use('/comments', require ('./routes/comments'));
-
 app.use('/scores', require ('./routes/scores'));
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(docs));
