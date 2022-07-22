@@ -9,7 +9,6 @@ const cors = require ('cors');
 const PORT = process.env.PORT || 3001;
 const { dbConnection } = require("./config/config");
 
-
 app.use(express.static('./images'));
 
 app.use(express.json());
@@ -28,8 +27,6 @@ app.use('/comments', require ('./routes/comments'));
 
 app.use('/scores', require ('./routes/scores'));
 
-
-
-app.use('/api-docs', swaggerUI.serve,swaggerUI.setup(docs));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(docs));
 
 app.use(typeError)

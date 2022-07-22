@@ -27,7 +27,7 @@ const RouteController = {
   async getAll(req, res) {
     try {
       const routes = await Route.find({})
-      .populate('userId')
+      .populate('userId');
       console.log(routes.length);
       res.status(200).send(routes)
     } catch (error) {
@@ -40,7 +40,7 @@ const RouteController = {
 
   async getAllRoutesPaginated(req, res) {
     try {
-      const numberRoutes = await Route.count()
+      const numberRoutes = await Route.count();
       const { page = 1, limit = 10 } = req.query;
       const routes = await Route.find({})
         .limit(limit * 1)
@@ -91,7 +91,7 @@ const RouteController = {
         populate: {
           path: "userId"
         }
-      })
+      });
       res.send(route)
     } catch (error) {
       console.error(error);
