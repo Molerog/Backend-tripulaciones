@@ -81,14 +81,6 @@ module.exports = {
         description: "Actualizar los datos del perfil del usuario",
         operationId: "updateUser",
         parameters: [
-          //   {
-          //     name: "_id",
-          //     in: "path",
-          //     schema: {
-          //       $ref: "#/components/schemas/_id",
-          //     },
-          //     description: "Update the user logged",
-          //   },
         ],
         requestBody: {
           content: {
@@ -178,29 +170,5 @@ module.exports = {
         }
       }
     },
-
-    // "/users/confirm/:{emailToken}": {
-    //   get: {
-    //     security: [
-    //       {
-    //         JWT: [],
-    //       },
-    //     ],
-    //     tags: {
-    //       Usuarios: "Confirmación de email",
-    //     },
-    //     description: "Confirmación de usuario",
-    //     operationId: "confirmUser",
-    //     parameters: [
-    //       {
-    //         name: "emailToken",
-    //         in: "path",
-    //         schema: {
-    //             $ref: "#/components/schemas/emailToken",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
   }
 }
