@@ -13,10 +13,9 @@ const RouteController = {
       const result = await axios.get(URL_API);
       await db.dropCollection("routes");
       const routes = await Route.create(...result.data);
-      console.log(routes)
       res.status(201).send(routes)
     } catch (error) {
-      console.log(error);
+      console.error(error);
       error.origin = 'Route';
       next(error)
     }
@@ -29,7 +28,7 @@ const RouteController = {
         .populate('likes')
       res.status(200).send(routes)
     } catch (error) {
-      console.log(err);
+      console.error(error);
       res.status(500).send({ message: 'Hubo un problema cargando las rutas' })
     }
   },

@@ -33,7 +33,7 @@ const CommentController = {
       );
       res.status(201).send({ message: `Comentario modificado con éxito`, comment });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send({ message: "No se pudo actualizar el comentario" });
     }
   },
@@ -43,7 +43,7 @@ const CommentController = {
       const comments = await Comment.find().populate("userId");
       res.status(200).send({ Number_of_comments: comments.length, comments });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
@@ -58,7 +58,7 @@ const CommentController = {
         .skip((page - 1) * limit);
       res.status(200).send({ Number_of_comments: comments.length, comments, numberComments });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
@@ -70,7 +70,7 @@ const CommentController = {
         message: `El comentario ${comment.body} ha sido borrado`, comment
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send({ message: "Hubo un problema al borrar el comentario" });
     }
   },

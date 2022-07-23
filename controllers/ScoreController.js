@@ -34,7 +34,7 @@ const ScoreController = {
             }, { new: true });
             res.status(201).send({ message: `Puntuación modificada con éxito`, score })
         } catch (error) {
-            console.log(error);
+            console.error(error);
             res.status(500).send({ message: 'No se pudo actualizar la puntuación' })
         }
     },
@@ -44,7 +44,7 @@ const ScoreController = {
             const scores = await Score.find().populate("userId");
             res.status(200).send({ scores })
         } catch (error) {
-            console.log(error);
+            console.error(error);
             res.status(500).send({ message: 'No se pudieron conseguir las puntuaciones' })
         }
     },
@@ -54,7 +54,7 @@ const ScoreController = {
             const score = await Score.findByIdAndDelete(req.params._id);
             res.status(200).send({ message: `Tu puntuación ha sido borrada`, score })
         } catch (error) {
-            console.log(error)
+            console.error(error)
             res.status(500).send({ message: 'Problema para borrar la puntuación' })
         }
     }
