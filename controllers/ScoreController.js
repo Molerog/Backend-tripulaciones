@@ -5,6 +5,13 @@ const Score = require("../models/Score");
 const ScoreController = {
     async create(req, res, next) {
         try {
+            const route = await Route.findById(req.params._id).populate('scoresId')
+            const exist=route.scoresId.map(el=>{return (el.userId)})
+            console.log("exist", exist)
+            console.log("user",req.user._id)
+            const found = exist.includes(req.user._id)
+            console.log("found",found)
+            if (!exist.includes(req.user._id)) {
             const score = await Score.create({
                 ...req.body, 
                 userId: req.user._id, 
@@ -18,7 +25,11 @@ const ScoreController = {
             });
             res.status(201).send(
                 { message: 'Se creó tu puntuación!', score }
-            )
+            )}else{
+                res.status(400).send(
+                    { message: 'No puedes hacer más puntuaciones' }
+                  )
+            }
         } catch (error) {
             console.error(error);
             error.origin = 'score crear';
