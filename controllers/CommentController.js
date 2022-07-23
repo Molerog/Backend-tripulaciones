@@ -6,11 +6,7 @@ const CommentController = {
   async create(req, res, next) {
     try {
       if (req.file) req.body.imagepath = req.file.filename;
-      const comment = await Comment.create({
-        ...req.body,
-        userId: req.user._id,
-        routeId: req.params._id,
-      });
+      const comment = await Comment.create({ ...req.body, userId: req.user._id, routeId: req.params._id });
       await Route.findByIdAndUpdate(req.params._id, {
         $push: { commentsId: comment._id },
       });
@@ -35,10 +31,7 @@ const CommentController = {
         },
         { new: true }
       );
-
-      res
-        .status(201)
-        .send({ message: `Comentario modificado con éxito`, comment });
+      res.status(201).send({ message: `Comentario modificado con éxito`, comment });
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: "No se pudo actualizar el comentario" });
@@ -51,9 +44,7 @@ const CommentController = {
       res.status(200).send({ Number_of_comments: comments.length, comments });
     } catch (error) {
       console.log(error);
-      res
-        .status(500)
-        .send({ message: "No se pudieron conseguir los comentarios" });
+      res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
 
@@ -65,16 +56,10 @@ const CommentController = {
         .populate("userId")
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      res.status(200).send({
-        Number_of_comments: comments.length,
-        comments,
-        numberComments,
-      });
+      res.status(200).send({ Number_of_comments: comments.length, comments, numberComments });
     } catch (error) {
       console.log(error);
-      res
-        .status(500)
-        .send({ message: "No se pudieron conseguir los comentarios" });
+      res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
 
@@ -82,14 +67,11 @@ const CommentController = {
     try {
       const comment = await Comment.findByIdAndDelete(req.params._id);
       res.status(200).send({
-        message: `El comentario ${comment.body} ha sido borrado`,
-        comment,
+        message: `El comentario ${comment.body} ha sido borrado`, comment
       });
     } catch (error) {
       console.log(error);
-      res
-        .status(500)
-        .send({ message: "Hubo un problema al borrar el comentario" });
+      res.status(500).send({ message: "Hubo un problema al borrar el comentario" });
     }
   },
 };
