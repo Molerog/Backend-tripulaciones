@@ -27,8 +27,8 @@ const RouteController = {
   async getAll(req, res) {
     try {
       const routes = await Route.find({})
-      .populate('userId');
-      console.log(routes.length);
+      .populate('userId')
+      .populate('likes')
       res.status(200).send(routes)
     } catch (error) {
       console.log(err);

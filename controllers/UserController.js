@@ -101,7 +101,7 @@ const UserController = {
   },
 
   async userDelete(req, res) {
-    try {
+    try {  
       const user = await User.findByIdAndDelete(req.user._id);
       await Comment.deleteMany({ userId: req.user._id });
       await Score.deleteMany({ userId: req.user._id });
