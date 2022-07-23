@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'Route'
   }],
+  quiz: [{
+    type: ObjectId,
+    ref: 'Quiz'
+  }],
 
   scoresId: [{
     type: ObjectId,
