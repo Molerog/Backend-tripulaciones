@@ -9,7 +9,7 @@ const QuizController = {
       await User.findByIdAndUpdate(req.user._id, {
         $push: { quiz: quiz._id }
       });
-      res.status(201).send({ quiz })
+      res.status(201).send({message:"cuestionario enviado!", quiz })
     } catch (error) {
       console.error(error);
     }
