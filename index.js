@@ -27,6 +27,9 @@ app.use('/comments', require ('./routes/comments'));
 
 app.use('/scores', require ('./routes/scores'));
 
+app.use('/quiz', require ('./routes/quiz'));
+
+
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(docs));
 
 app.use(typeError)
