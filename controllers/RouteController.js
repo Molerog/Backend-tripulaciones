@@ -108,6 +108,24 @@ const RouteController = {
     } catch (error) {
       res.status(500).send({ message: 'Hubo un problema quitando un like' })
     }
+  },
+
+  async getRoutesByTransport(req,res){
+    try {
+      const transport = (req.params.transport)
+      const { page = 1, limit = 10 } = req.query;    
+      const routes = await Route.find({transport})
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      const numberRoutes = routes.length
+      if (routes === null){
+        res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
+        return;
+      }
+      res.status(200).send({routes, numberRoutes})
+    } catch (error) {
+      console.log(error)
+    }
   }
 };
 
