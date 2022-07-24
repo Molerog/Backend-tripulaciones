@@ -1,4 +1,3 @@
-// require ('./seeders/loadRoutes')
 require("dotenv").config();
 const express = require("express");
 const { typeError } = require("./middleware/errors");

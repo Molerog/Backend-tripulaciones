@@ -11,14 +11,11 @@ const RouteController = {
   async create(req, res, next) {
     try {
       const result = await axios.get(URL_API);
-      // const dataString = result.data.replace(/ NaN,/g, ' 0,');
-      // const dataJSON = JSON.parse(dataString)
       await db.dropCollection("routes");
       const routes = await Route.create(...result.data);
-      console.log(routes)
       res.status(201).send(routes)
     } catch (error) {
-      console.log(error);
+      console.error(error);
       error.origin = 'Route';
       next(error)
     }
@@ -27,14 +24,12 @@ const RouteController = {
   async getAll(req, res) {
     try {
       const routes = await Route.find({})
-      .populate('userId')
-      .populate('likes')
+        .populate('userId')
+        .populate('likes')
       res.status(200).send(routes)
     } catch (error) {
-      console.log(err);
-      res.status(500).send(
-        { message: 'Hubo un problema cargando las rutas' }
-      )
+      console.error(error);
+      res.status(500).send({ message: 'Hubo un problema cargando las rutas' })
     }
   },
 
@@ -46,14 +41,10 @@ const RouteController = {
         
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      res.status(200).send(
-        { routes, numberRoutes }
-      )
+      res.status(200).send({ routes, numberRoutes })
     } catch (error) {
       console.error(error);
-      res.status(400).send(
-        { message: 'Ha habido un problema al cargar las rutas' }
-      )
+      res.status(400).send({ message: 'Ha habido un problema al cargar las rutas' })
     }
   },
 
@@ -73,32 +64,26 @@ const RouteController = {
         );
         res.send(route)
       } else {
-        res.status(400).send(
-          { message: 'No puedes dar más likes' }
-        )
+        res.status(400).send({ message: 'No puedes dar más likes' })
       }
     } catch (error) {
-      res.status(500).send(
-        { message: 'Hubo un problema dando un like' }
-      )
+      res.status(500).send({ message: 'Hubo un problema dando un like' })
     }
   },
 
   async getById(req, res) {
     try {
       const route = await Route.findById(req.params._id)
-      .populate({
-        path:"commentsId",
-        populate: {
-          path: "userId"
-        }
-      });
+        .populate({
+          path: "commentsId",
+          populate: {
+            path: "userId"
+          }
+        });
       res.send(route)
     } catch (error) {
       console.error(error);
-      res.status(500).send(
-        { message: 'Ha habido un problema al cargar la ruta' }
-      )
+      res.status(500).send({ message: 'Ha habido un problema al cargar la ruta' })
     }
   },
 
@@ -116,18 +101,12 @@ const RouteController = {
           { $pull: { likes: req.params._id } },
           { new: true }
         );
-        res.status(200).send(
-          { message: 'Me gusta quitado', route }
-        )
+        res.status(200).send({ message: 'Me gusta quitado', route })
       } else {
-        res.status(400).send(
-          { message: 'No puedes quitar más likes' }
-        )
+        res.status(400).send({ message: 'No puedes quitar más likes' })
       }
     } catch (error) {
-      res.status(500).send(
-        { message: 'Hubo un problema quitando un like' }
-      )
+      res.status(500).send({ message: 'Hubo un problema quitando un like' })
     }
   }
 };

@@ -35,12 +35,9 @@ const CommentController = {
         },
         { new: true }
       );
-
-      res
-        .status(201)
-        .send({ message: `Comentario modificado con éxito`, comment });
+      res.status(201).send({ message: `Comentario modificado con éxito`, comment });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send({ message: "No se pudo actualizar el comentario" });
     }
   },
@@ -50,10 +47,8 @@ const CommentController = {
       const comments = await Comment.find().populate("userId");
       res.status(200).send({ Number_of_comments: comments.length, comments });
     } catch (error) {
-      console.log(error);
-      res
-        .status(500)
-        .send({ message: "No se pudieron conseguir los comentarios" });
+      console.error(error);
+      res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
 
@@ -65,16 +60,10 @@ const CommentController = {
         .populate("userId")
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      res.status(200).send({
-        Number_of_comments: comments.length,
-        comments,
-        numberComments,
-      });
+      res.status(200).send({ Number_of_comments: comments.length, comments, numberComments });
     } catch (error) {
-      console.log(error);
-      res
-        .status(500)
-        .send({ message: "No se pudieron conseguir los comentarios" });
+      console.error(error);
+      res.status(500).send({ message: "No se pudieron conseguir los comentarios" });
     }
   },
 
@@ -82,14 +71,11 @@ const CommentController = {
     try {
       const comment = await Comment.findByIdAndDelete(req.params._id);
       res.status(200).send({
-        message: `El comentario ${comment.body} ha sido borrado`,
-        comment,
+        message: `El comentario ${comment.body} ha sido borrado`, comment
       });
     } catch (error) {
-      console.log(error);
-      res
-        .status(500)
-        .send({ message: "Hubo un problema al borrar el comentario" });
+      console.error(error);
+      res.status(500).send({ message: "Hubo un problema al borrar el comentario" });
     }
   },
 };

@@ -1,7 +1,7 @@
 const { send } = require("express/lib/response");
 
 const handleValidationError = (err, res) => {
-    let errors = Object.values(err.errors).map(el => el.message); //Objet.values nos transforma el objeto (entre paréntesis) en un array para poder aplicar métodos de arrays
+    let errors = Object.values(err.errors).map(el => el.message); 
     if(errors.length > 1) {
         let chain = "";
         for (let i = 0; i < errors.length; i++) {
