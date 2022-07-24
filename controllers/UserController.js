@@ -88,9 +88,6 @@ const UserController = {
     try {  
       await Comment.deleteMany({ userId: req.user._id });
       await Score.deleteMany({ userId: req.user._id });
-      await Route.remove({
-        likes: req.user._id
-      });
       const user = await User.findByIdAndDelete(req.user._id);
       res.status(201).send(
         { message: `El usuario ${user.name} ha sido eliminado` }
