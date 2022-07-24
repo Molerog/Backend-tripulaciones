@@ -139,7 +139,7 @@ const RouteController = {
         res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
         return;
       }
-      res.status(200).send({routes, numberRoutes})
+      res.status(200).send({numberRoutes,routes})
     } catch (error) {
       console.log(error)
     }
