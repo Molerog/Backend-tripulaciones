@@ -126,6 +126,23 @@ const RouteController = {
     } catch (error) {
       console.log(error)
     }
+  },
+  async getRoutesByType(req,res){
+    try {
+      const type = (req.params.type)
+      const { page = 1, limit = 10 } = req.query;    
+      const routes = await Route.find({type})
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      const numberRoutes = routes.length
+      if (routes === null){
+        res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
+        return;
+      }
+      res.status(200).send({routes, numberRoutes})
+    } catch (error) {
+      console.log(error)
+    }
   }
 };
 
