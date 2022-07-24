@@ -37,6 +37,11 @@ const UserSchema = new mongoose.Schema({
     ref: 'Comment'
   }],
 
+  routeId:[{
+    type: ObjectId,
+    ref: 'Route'
+  }],
+
   likes: [{
     type: ObjectId,
     ref: 'Route'
