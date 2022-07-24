@@ -37,7 +37,7 @@ const UserController = {
           JWT_SECRET,
           { expiresIn: '48h' }
         );
-        const url = "http://localhost:8080/users/confirm/" + emailToken;
+        const url = "https://app-rutopic.herokuapp.com/users/confirm/" + emailToken;
         await transporter.sendMail({
           to: req.body.email,
           subject: "Confirma tu registro a nuestra App de Rutas",
