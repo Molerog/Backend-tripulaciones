@@ -5,7 +5,7 @@ const User = require("../models/User");
 const CommentController = {
   async create(req, res, next) {
     try {
-      if (req.file) req.body.imagepath = req.file.filename;
+      if (req.file)req.body.imagepath = req.file.filename;
       const comment = await Comment.create({
         ...req.body,
         userId: req.user._id,

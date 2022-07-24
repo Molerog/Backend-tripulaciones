@@ -43,6 +43,7 @@ const RouteController = {
       const numberRoutes = await Route.count();
       const { page = 1, limit = 10 } = req.query;
       const routes = await Route.find({})
+        
         .limit(limit * 1)
         .skip((page - 1) * limit);
       res.status(200).send(
