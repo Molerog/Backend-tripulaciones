@@ -113,16 +113,16 @@ const RouteController = {
   async getRoutesByTransport(req,res){
     try {
       const transport = (req.params.transport)
-      const { page = 1, limit = 10 } = req.query;    
+      // const numberRoutes= await Route.find({transport})
+      // const { page = 1, limit = 10 } = req.query;    
       const routes = await Route.find({transport})
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      const numberRoutes = routes.length
+      // .limit(limit * 1)
+      // .skip((page - 1) * limit)
       if (routes === null){
         res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
         return;
       }
-      res.status(200).send({routes, numberRoutes})
+      res.status(200).send(routes)
     } catch (error) {
       console.log(error)
     }
