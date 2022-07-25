@@ -23,7 +23,7 @@ const RouteController = {
 
   async getAll(req, res) {
     try {
-      const routes = await Route.find({}).populate("userId").populate("likes");
+      const routes = await Route.find({})
       res.status(200).send(routes);
     } catch (error) {
       console.error(error);
@@ -35,7 +35,7 @@ const RouteController = {
     try {
       const numberRoutes = await Route.count();
       const { page = 1, limit = 10 } = req.query;
-      const routes = await Route.find({})
+      const routes = await Route.find({}).populate("scoresId")
 
         .limit(limit * 1)
         .skip((page - 1) * limit);
