@@ -80,8 +80,7 @@ module.exports = {
         },
         description: "Actualizar los datos del perfil del usuario",
         operationId: "updateUser",
-        parameters: [
-        ],
+        parameters: [],
         requestBody: {
           content: {
             "multipart/form-data": {
@@ -169,6 +168,6 @@ module.exports = {
           500: { description: "Error de servidor" }
         }
       }
-    },
+    }
   }
 }
