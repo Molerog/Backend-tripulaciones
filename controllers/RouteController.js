@@ -1,7 +1,7 @@
-const Route = require('../models/Route');
-const User = require('../models/User');
-const axios = require('axios');
-const mongoose = require('mongoose');
+const Route = require("../models/Route");
+const User = require("../models/User");
+const axios = require("axios");
+const mongoose = require("mongoose");
 
 const db = mongoose.connection;
 
@@ -13,23 +13,21 @@ const RouteController = {
       const result = await axios.get(URL_API);
       await db.dropCollection("routes");
       const routes = await Route.create(...result.data);
-      res.status(201).send(routes)
+      res.status(201).send(routes);
     } catch (error) {
       console.error(error);
-      error.origin = 'Route';
-      next(error)
+      error.origin = "Route";
+      next(error);
     }
   },
 
   async getAll(req, res) {
     try {
       const routes = await Route.find({})
-        .populate('userId')
-        .populate('likes')
-      res.status(200).send(routes)
+      res.status(200).send(routes);
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: 'Hubo un problema cargando las rutas' })
+      res.status(500).send({ message: "Hubo un problema cargando las rutas" });
     }
   },
 
@@ -37,14 +35,16 @@ const RouteController = {
     try {
       const numberRoutes = await Route.count();
       const { page = 1, limit = 10 } = req.query;
-      const routes = await Route.find({})
-        
+      const routes = await Route.find({}).populate("scoresId")
+
         .limit(limit * 1)
         .skip((page - 1) * limit);
-      res.status(200).send({ routes, numberRoutes })
+      res.status(200).send({ routes, numberRoutes });
     } catch (error) {
       console.error(error);
-      res.status(400).send({ message: 'Ha habido un problema al cargar las rutas' })
+      res
+        .status(400)
+        .send({ message: "Ha habido un problema al cargar las rutas" });
     }
   },
 
@@ -62,28 +62,29 @@ const RouteController = {
           { $push: { likes: req.params._id } },
           { new: true }
         );
-        res.send(route)
+        res.send(route);
       } else {
-        res.status(400).send({ message: 'No puedes dar más likes' })
+        res.status(400).send({ message: "No puedes dar más likes" });
       }
     } catch (error) {
-      res.status(500).send({ message: 'Hubo un problema dando un like' })
+      res.status(500).send({ message: "Hubo un problema dando un like" });
     }
   },
 
   async getById(req, res) {
     try {
-      const route = await Route.findById(req.params._id)
-        .populate({
-          path: "commentsId",
-          populate: {
-            path: "userId"
-          }
-        });
-      res.send(route)
+      const route = await Route.findById(req.params._id).populate({
+        path: "commentsId",
+        populate: {
+          path: "userId",
+        },
+      });
+      res.send(route);
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: 'Ha habido un problema al cargar la ruta' })
+      res
+        .status(500)
+        .send({ message: "Ha habido un problema al cargar la ruta" });
     }
   },
 
@@ -101,49 +102,66 @@ const RouteController = {
           { $pull: { likes: req.params._id } },
           { new: true }
         );
-        res.status(200).send({ message: 'Me gusta quitado', route })
+        res.status(200).send({ message: "Me gusta quitado", route });
       } else {
-        res.status(400).send({ message: 'No puedes quitar más likes' })
+        res.status(400).send({ message: "No puedes quitar más likes" });
       }
     } catch (error) {
-      res.status(500).send({ message: 'Hubo un problema quitando un like' })
+      res.status(500).send({ message: "Hubo un problema quitando un like" });
     }
   },
 
-  async getRoutesByTransport(req,res){
+  async getRoutesByTransport(req, res) {
     try {
-      const transport = (req.params.transport)
-      const { page = 1, limit = 10 } = req.query;    
-      const routes = await Route.find({transport})
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      const numberRoutes = routes.length
-      if (routes === null){
-        res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
+      const transport = req.params.transport;
+      const routes = await Route.find({ transport });
+      const numberRoutes = routes.length;
+      if (routes === null) {
+        res
+          .status(400)
+          .send({ message: "Lo siento, no pudimos encontrar esas rutas" });
         return;
       }
-      res.status(200).send({routes, numberRoutes})
+      res.status(200).send({routes, numberRoutes});
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
-  async getRoutesByType(req,res){
+  async getRoutesByTypePag(req, res) {
     try {
-      const type = (req.params.type)
-      const { page = 1, limit = 10 } = req.query;    
-      const routes = await Route.find({type})
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      const numberRoutes = routes.length
-      if (routes === null){
-        res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
+      const type = req.params.type;
+      const { page = 1, limit = 10 } = req.query;
+      const routes = await Route.find({ type })
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
+      const numberRoutes = routes.length;
+      if (routes === null) {
+        res
+          .status(400)
+          .send({ message: "Lo siento, no pudimos encontrar esas rutas" });
         return;
       }
-      res.status(200).send({numberRoutes,routes})
+      res.status(200).send({ numberRoutes, routes });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  },
+  async getRoutesByType(req, res) {
+    try {
+      const type = req.params.type;
+      const routes = await Route.find({ type });
+      const numberRoutes = routes.length;
+      if (routes === null) {
+        res
+          .status(400)
+          .send({ message: "Lo siento, no pudimos encontrar esas rutas" });
+        return;
+      }
+      res.status(200).send({ numberRoutes, routes });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
-module.exports = RouteController
+module.exports = RouteController;
