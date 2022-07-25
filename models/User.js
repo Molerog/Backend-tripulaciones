@@ -37,9 +37,18 @@ const UserSchema = new mongoose.Schema({
     ref: 'Comment'
   }],
 
+  routeId:[{
+    type: ObjectId,
+    ref: 'Route'
+  }],
+
   likes: [{
     type: ObjectId,
     ref: 'Route'
+  }],
+  quiz: [{
+    type: ObjectId,
+    ref: 'Quiz'
   }],
 
   scoresId: [{
@@ -48,28 +57,19 @@ const UserSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-//fire a function after doc saved to db
-UserSchema.post('save', function (doc, next) {
-  console.log('new user was created & saved', doc);
-  next()
-});
-
-// fire a function before doc saved to db
-UserSchema.pre('save', function (next) {
-  console.log('user about to be created & saved', this);
-  next()
-});
-
-UserSchema.pre('remove', function (next) {
-  this.model('User').remove({ followers: this._id }, next)
-});
-
-// UserSchema.methods.toJSON = function() {
-//   const user = this._doc
-//   // user.totalFollowers2 = user.followers?.length; //el interrogante ignora el error al yo haberle indicado que no buscara en followers (undefined)
-//   // delete user.password
-//   return user
-// }
+// UserSchema.pre('deleteOne', function (next) {
+//   console.log('hola')
+//   const userId = this.getQuery()["_id"];
+//   mongoose.model("Route").deleteMany({'user': userId}, function (err, result) {
+//     if (err) {
+//       console.log(`[error] ${err}`);
+//       next(err);
+//     } else {
+//       console.log('success');
+//       next();
+//     }
+//   });
+// });
 
 const User = mongoose.model('User', UserSchema);
 

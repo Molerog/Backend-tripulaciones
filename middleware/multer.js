@@ -11,7 +11,7 @@ const generateUploadImageMulter = path => Multer({
         if (mimetypes.includes(file.mimetype)) cb(null, true)
         else cb(null, false)
     },
-    limits: { fileSize: 2 * 1024 * 1024 } //esto son 2 megas de límite
+    limits: { fileSize: 2 * 1024 * 1024 } 
 });
 
 const uploadUserImages = generateUploadImageMulter('./images/users');

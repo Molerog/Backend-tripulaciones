@@ -6,11 +6,6 @@ module.exports = {
         name: "Authorization",
         in: "header"
       },
-      // JWT:{
-      //   type: "apiKey",
-      //   in: "query",
-      //   name: "access_token",
-      // }
     },
 
     schemas: {
@@ -52,7 +47,6 @@ module.exports = {
             description: "Nombre del usuario",
             example: "Germán",
             required: true,
-            // example: "Germán", // esto lo comento porque creo que está repetido
           },
           email: {
             type: "string",

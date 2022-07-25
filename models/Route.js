@@ -30,7 +30,7 @@ const RouteSchema = new mongoose.Schema({
     ref: "Comment"
   }],
 
-  likes: [{ type: ObjectId }],
+  likes: [{ type: ObjectId, ref:"User"}],
 
   scoresId: [{
     type: ObjectId,
@@ -50,6 +50,8 @@ const RouteSchema = new mongoose.Schema({
     longitude: Number
   }]
 }, { timestamps: true });
+
+
 
 const Route = mongoose.model("Route", RouteSchema);
 

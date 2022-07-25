@@ -37,7 +37,7 @@ const UserController = {
           JWT_SECRET,
           { expiresIn: '48h' }
         );
-        const url = "http://localhost:8080/users/confirm/" + emailToken;
+        const url = "https://app-rutopic.herokuapp.com/users/confirm/" + emailToken;
         await transporter.sendMail({
           to: req.body.email,
           subject: "Confirma tu registro a nuestra App de Rutas",
@@ -101,10 +101,10 @@ const UserController = {
   },
 
   async userDelete(req, res) {
-    try {
-      const user = await User.findByIdAndDelete(req.user._id);
+    try {  
       await Comment.deleteMany({ userId: req.user._id });
       await Score.deleteMany({ userId: req.user._id });
+      const user = await User.findByIdAndDelete(req.user._id);
       res.status(201).send(
         { message: `El usuario ${user.name} ha sido eliminado` }
       )
