@@ -23,7 +23,7 @@ const RouteController = {
 
   async getAll(req, res) {
     try {
-      const routes = await Route.find({})
+      const routes = await Route.find({}).populate("scoresId")
       res.status(200).send(routes);
     } catch (error) {
       console.error(error);
@@ -50,13 +50,13 @@ const RouteController = {
 
   async like(req, res) {
     try {
-      const exist = await Route.findById(req.params._id);
+      const exist = await Route.findById(req.params._id)
       if (!exist.likes.includes(req.user._id)) {
         const route = await Route.findByIdAndUpdate(
           req.params._id,
           { $push: { likes: req.user._id } },
           { new: true }
-        );
+        ).populate("scoresId")
         await User.findByIdAndUpdate(
           req.user._id,
           { $push: { likes: req.params._id } },
@@ -96,7 +96,7 @@ const RouteController = {
           req.params._id,
           { $pull: { likes: req.user._id } },
           { new: true }
-        );
+        ).populate("scoresId")
         await User.findByIdAndUpdate(
           req.user._id,
           { $pull: { likes: req.params._id } },
