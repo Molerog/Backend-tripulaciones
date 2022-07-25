@@ -107,7 +107,7 @@ module.exports = {
           email: {
             type: "string",
             description: "Email del usuario",
-            example: "mol@gmail.com",
+            example: "test@gmail.com",
             required: true
           },
           password: {
@@ -178,6 +178,9 @@ module.exports = {
       },
       commentCreate: {
         type: "object",
+        parameters:{
+          type:"objectId",
+        },
         properties: {
           body: {
             type: "string",
@@ -188,7 +191,8 @@ module.exports = {
             type: "string",
             format: "binary",
             example: "1657907225788-Resident Evil.jpg"
-          }
+          },
+
         },
       },
       commentUpdate: {
@@ -210,7 +214,8 @@ module.exports = {
         type: "objectId",
         description: "ID del comentario",
         example: "62de80b5d429080163f7c40e"
-      }
+      },
+     
     }
   }
 }
