@@ -127,7 +127,7 @@ const RouteController = {
       console.log(error)
     }
   },
-  async getRoutesByType(req,res){
+  async getRoutesByTypePag(req,res){
     try {
       const type = (req.params.type)
       const { page = 1, limit = 10 } = req.query;    
@@ -144,6 +144,21 @@ const RouteController = {
       console.log(error)
     }
   }
+,
+async getRoutesByType(req,res){
+  try {
+    const type = (req.params.type)
+    const routes = await Route.find({type})
+    const numberRoutes = routes.length
+    if (routes === null){
+      res.status(400).send({message: "Lo siento, no pudimos encontrar esas rutas"})
+      return;
+    }
+    res.status(200).send({numberRoutes,routes})
+  } catch (error) {
+    console.log(error)
+  }
+}
 };
 
 module.exports = RouteController
