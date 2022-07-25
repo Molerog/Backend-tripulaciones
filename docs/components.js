@@ -117,9 +117,8 @@ module.exports = {
             required: true
           }
         }
-      }
-    },
-    schema: {
+      },
+
       routeGet: {
         type: "object",
         properties: {
@@ -160,6 +159,57 @@ module.exports = {
           }
         }
         // queda más por poner pero no sé si es que no lo estoy haciendo bien o es que es así de difícil
+      },
+
+      commentGet: {
+        type: "object",
+        properties: {
+          Number_of_comments: {
+            type: "number",
+            description: "Cantidad total de comentarios publicados",
+            example: "1"
+          },
+          comments: {
+            type: "string",
+            description: "Comentario",
+            example: "wioiej"
+          }
+        }
+      },
+      commentCreate: {
+        type: "object",
+        properties: {
+          body: {
+            type: "string",
+            description: "Comentario",
+            example: "Hola"
+          },
+          imageComment: {
+            type: "string",
+            format: "binary",
+            example: "1657907225788-Resident Evil.jpg"
+          }
+        },
+      },
+      commentUpdate: {
+        type: "object",
+        properties: {
+          body: {
+            type: "string",
+            description: "Comentario editado",
+            example: "Comentario modificado"
+          },
+          imageComment: {
+            type: "string",
+            format: "binary",
+            example: "1658745427746-OriolHome.jpeg"
+          }
+        },
+      },
+      commentId:{
+        type: "objectId",
+        description: "ID del comentario",
+        example: "62de80b5d429080163f7c40e"
       }
     }
   }
