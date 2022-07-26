@@ -3,7 +3,7 @@ module.exports = {
     "/users": {
       get: {
         tags: {
-          Usuarios: "Obtener usuarios",
+          Usuarios: " Obtener usuarios",
         },
         description:
           "Obtener todos los usuarios registrados en la base de datos",
@@ -26,10 +26,10 @@ module.exports = {
 
       post: {
         tags: {
-          Usuarios: "Registrar usuarios",
+          Usuarios: " Registrar usuarios",
         },
         description:
-          "Crear un nuevo usuario (los campos 'name', 'password' y 'email' son obligatorios)",
+          " Crear un nuevo usuario (los campos 'name', 'password' y 'email' son obligatorios)",
         operationId: "createUsers",
         parameters: [],
         requestBody: {
@@ -78,7 +78,7 @@ module.exports = {
           },
         ],
         tags: {
-          Usarios: "Actualizar usuario",
+          Usarios: " Actualizar usuario",
         },
         description: "Actualizar los datos del perfil del usuario",
         operationId: "updateUser",
@@ -108,7 +108,7 @@ module.exports = {
     "/users/login": {
       post: {
         tags: {
-          Usuario: "LogIn de usuario",
+          Usuario: " LogIn de usuario",
         },
         description: "Conecta al usuario",
         operationId: "loginUser",
@@ -138,7 +138,7 @@ module.exports = {
           },
         ],
         tags: {
-          Usuarios: "LogOut de usuario",
+          Usuarios: " LogOut de usuario",
         },
         description: "Desconecta al usuario",
         operationId: "deleteUser",
@@ -171,6 +171,7 @@ module.exports = {
         },
       },
     },
+
     "/comments": {
       get: {
         security: [
@@ -179,7 +180,7 @@ module.exports = {
           },
         ],
         tags: {
-          Comentarios: "-Obtener comentarios",
+          Comentarios: " Obtener comentarios",
         },
         description: "Obtener todos los comentarios de la base de datos",
         operationId: "getComments",
@@ -206,7 +207,7 @@ module.exports = {
           },
         ],
         tags: {
-          Comentarios: "Crear comentario",
+          Comentarios: " Crear comentario",
         },
         description: "Crear un nuevo comentario",
         operationId: "createComments",
@@ -247,17 +248,19 @@ module.exports = {
           },
         ],
         tags: {
-          Comenatrios: "Actualizar comentario",
+          Comenatrios: " Actualizar comentario",
         },
         description: "Editar el comentario",
         operationId: "updateComment",
-        parameters: [{
-          in: "path",
-          name: "commentId",
-          schema: {
-            type: "objectId",
+        parameters: [
+          {
+            in: "path",
+            name: "commentId",
+            schema: {
+              type: "objectId",
+            },
           },
-        }],
+        ],
         requestBody: {
           content: {
             "multipart/form-data": {
@@ -287,20 +290,206 @@ module.exports = {
           },
         ],
         tags: {
-          Comentarios: "Eliminar comentario",
+          Comentarios: " Eliminar comentario",
         },
         description: "Eliminar un comentario",
         operationId: "deleteComment",
-        parameters: [{
-          in: "path",
-          name: "_Id",
-          schema: {
-            type: "objectId",
+        parameters: [
+          {
+            in: "path",
+            name: "_Id",
+            schema: {
+              type: "objectId",
+            },
           },
-        }],
+        ],
         responses: {
           200: { description: "Comentario eliminado correctamente" },
           404: { description: "No se encontró el comentario" },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/routes": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Rutas: " Obtener rutas",
+        },
+        description: "Obtener las rutas",
+        operationId: "getRoutes",
+        parameters: [],
+        responses: {
+          200: {
+            description: "Se han obtenido las rutas",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getRoutes",
+                },
+              },
+            },
+          },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/routes/route/{_Id}": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Rutas: " Obtener ruta por id",
+        },
+        description: "Encontrar la ruta",
+        operationId: "Encontrar ruta",
+        parameters: [
+          {
+            in: "path",
+            name: "_Id",
+            schema: {
+              type: "objectId",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Se ha obtenido la ruta",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getRouteById",
+                },
+              },
+            },
+          },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/routes/likes/{_Id}": {
+      put: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Rutas: " Dar like a ruta",
+        },
+        description: "Dar like",
+        operationId: "Like a ruta",
+        parameters: [
+          {
+            in: "path",
+            name: "_Id",
+            schema: {
+              type: "objectId",
+            },
+          },
+        ],
+        responses: {
+          200: { description: "Se ha dado like a la ruta" },
+          404: { description: "No se encontró la ruta" },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/routes/dislike/{_Id}": {
+      put: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Rutas: " Dar dislike a ruta",
+        },
+        description: "Dar dislike",
+        operationId: "Dislike a ruta",
+        parameters: [
+          {
+            in: "path",
+            name: "_Id",
+            schema: {
+              type: "objectId",
+            },
+          },
+        ],
+        responses: {
+          200: { description: "Se ha dado dislike a la ruta" },
+          404: { description: "No se encontró la ruta" },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/routes/search/{transport}": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Rutas: " filtrar por transporte",
+        },
+        description: "Filtra ruta a pie o en bici",
+        operationId: "Transporte",
+        parameters: [
+          {
+            in: "path",
+            name: "transport",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Se ha obtenido la ruta",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getRoutes",
+                },
+              },
+            },
+          },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/scores/": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Usuarios: " Obtener puntuaciones",
+        },
+        description: "Obtener las puntuaciones de los usuarios",
+        operationId: "getscores",
+        parameters: [],
+        responses: {
+          200: {
+            description: "Se han obtenido los usuarios",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getScores",
+                },
+              },
+            },
+          },
           500: { description: "Error de servidor" },
         },
       },
