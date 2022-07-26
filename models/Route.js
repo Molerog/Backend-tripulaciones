@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.SchemaTypes.ObjectId;
 
+
 const RouteSchema = new mongoose.Schema({
+
+ 
   name: { type: String },
 
   difficulty: { type: String },
@@ -49,8 +52,8 @@ const RouteSchema = new mongoose.Schema({
     latitude: Number,
     longitude: Number
   }]
-}, { timestamps: true });
 
+}, { timestamps: true });
 
 
 const Route = mongoose.model("Route", RouteSchema);
