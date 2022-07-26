@@ -34,7 +34,6 @@ const RouteSchema = new mongoose.Schema({
   }],
 
   likes: [{ type: ObjectId, ref: "User" }],
-  scoreMedia: [{ type: Number }],
   scoresId: [{
     type: ObjectId,
     ref: "Score"
