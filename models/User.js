@@ -57,19 +57,7 @@ const UserSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-// UserSchema.pre('deleteOne', function (next) {
-//   console.log('hola')
-//   const userId = this.getQuery()["_id"];
-//   mongoose.model("Route").deleteMany({'user': userId}, function (err, result) {
-//     if (err) {
-//       console.log(`[error] ${err}`);
-//       next(err);
-//     } else {
-//       console.log('success');
-//       next();
-//     }
-//   });
-// });
+
 
 const User = mongoose.model('User', UserSchema);
 
