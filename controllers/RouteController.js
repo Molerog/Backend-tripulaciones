@@ -124,7 +124,7 @@ const RouteController = {
       }
       res.status(200).send({routes, numberRoutes});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   async getRoutesByTypePag(req, res) {
@@ -143,7 +143,7 @@ const RouteController = {
       }
       res.status(200).send({ numberRoutes, routes });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   async getRoutesByType(req, res) {
@@ -159,7 +159,7 @@ const RouteController = {
       }
       res.status(200).send({ numberRoutes, routes });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 };

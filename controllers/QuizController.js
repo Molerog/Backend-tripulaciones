@@ -22,7 +22,7 @@ const QuizController = {
       const quiz = await Quiz.find();
       res.status(200).send(quiz)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       res.status(400).send({ message: 'Ha habido un problema al cargar el quiz' })
     }
   },
