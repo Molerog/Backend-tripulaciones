@@ -12,7 +12,6 @@ const ScoreController = {
             })
             await Route.findByIdAndUpdate(req.params._id, {
                 $push: { scoresId: score._id },
-                $push: { scoreMedia: score.score }
             });
             await User.findByIdAndUpdate(req.user._id, {
                 $push: { scoresId: score._id }
