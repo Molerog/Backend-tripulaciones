@@ -49,7 +49,7 @@ const UserController = {
         )
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       error.origin = "User";
       next(error)
     }
@@ -190,7 +190,7 @@ const UserController = {
       .populate("likes")
       res.status(200).send(user)
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send(
         { message: "Hubo problemas para traer tu información" }
       )
