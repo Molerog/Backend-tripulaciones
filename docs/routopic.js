@@ -494,6 +494,143 @@ module.exports = {
         },
       },
     },
-    
+    "/scores/score/{_Id}": {
+      delete: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Comentarios: " Eliminar puntuación",
+        },
+        description: "El usuario puede eliminar su puntuación",
+        operationId: "deleteScore",
+        parameters: [
+          {
+            in: "path",
+            name: "_Id",
+            schema: {
+              type: "objectId",
+            },
+          },
+        ],
+        responses: {
+          200: { description: "Puntuación eliminada correctamente" },
+          404: { description: "No se encontró la puntuación" },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/scores/route/{routeId}": {
+      post: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Comentarios: " Crear puntuación",
+        },
+        description: "El usuario puede dar puntuación a la ruta",
+        operationId: "createScores",
+        parameters: [
+          {
+            in: "path",
+            name: "routeId",
+            schema: {
+              type: "objectId",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            " application/json": {
+              schema: {
+                $ref: "#/components/schemas/createScores",
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Se ha puntuado correctamente",
+            content: {
+              " multipart/form-data": {
+                schema: {
+                  $ref: "#/components/schemas/getScores",
+                },
+                500: { description: "Error de servidor" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/quiz/": {
+      get: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Usuarios: " Obtener formulario",
+        },
+        description: "Obtener formularios realizados por usuarios",
+        operationId: "getQuiz",
+        parameters: [],
+        responses: {
+          200: {
+            description: "Se han obtenido los formularios",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getQuiz",
+                },
+              },
+            },
+          },
+          500: { description: "Error de servidor" },
+        },
+      },
+    },
+    "/quiz/postUser/": {
+      post: {
+        security: [
+          {
+            ApiKeyAuth: [],
+          },
+        ],
+        tags: {
+          Comentarios: " Crear formulario",
+        },
+        description: "El usuario puede realizar el formulario",
+        operationId: "createQuiz",
+        parameters: [],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/createQuiz",
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Se ha puntuado correctamente",
+            content: {
+              " application/json": {
+                schema: {
+                  $ref: "#/components/schemas/getQuiz",
+                },
+                500: { description: "Error de servidor" },
+              },
+            },
+          },
+        },
+      },
+    },
   },
 };

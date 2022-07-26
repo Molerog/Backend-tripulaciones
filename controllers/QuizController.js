@@ -5,7 +5,7 @@ const User = require("../models/User");
 const QuizController = {
   async create(req, res) {
     try {
-      const quiz = await Quiz.create({ ...req.query, userId: req.user._id })
+      const quiz = await Quiz.create({ ...req.body, userId: req.user._id })
       await User.findByIdAndUpdate(req.user._id, {
         $push: { quiz: quiz._id }
       });
