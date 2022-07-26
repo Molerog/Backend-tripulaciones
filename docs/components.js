@@ -263,27 +263,126 @@ module.exports = {
             description: "ID de la puntuación",
             example: "62dd568a6b82667a4c0504d5",
           },
-          score:{
+          score: {
             type: "number",
             description: "Puntuación del usuario",
-            example: "4"
+            example: "4",
           },
-          userId:{
+          userId: {
             type: "objectId",
             description: "ID del usuario",
             example: "62dd568a6b82667a4c0504d5",
-          
           },
-          name:{
+          name: {
             type: "string",
             description: "nombre del usuario",
             example: "Vanesa",
           },
-          email:{
+          email: {
             type: "string",
             description: "email del usuario",
-            example: 'vanesa@gmail.com'
+            example: "vanesa@gmail.com",
+          },
+        },
+      },
+      createScores: {
+        type: "object",
+        properties: {
+          score: {
+            type: "integer",
+            description: "Puntuación del usuario",
+            example: "4",
+          },
+        },
+      },
+      getQuiz: {
+        type: "object",
+        properties: {
+          idForm: {
+            type: "objectId",
+            description: "Id del formulario del usuario",
+            example: "62dee9868558fe10482474bd",
+          },
+          idUser: {
+            type: "objectId",
+            description: "Id del usuario",
+            example: "62dd562f6b82667a4c0504a4",
+          },
+          age: {
+            type: "number",
+            description: "edad del usuario",
+            example: "1987",
+          },
+          gender: {
+            type: "string",
+            description: "género del usuario",
+            example: "hombre",
+          },
+          routeType: {
+            type: "string",
+            description: "tipo de ruta",
+            example: "patrimonio",
+          },
+          price: {
+            type: "string",
+            description: "precio de la ruta",
+            example: "gratis",
+          },
+          difficulty: {
+            type: "string",
+            description: "dificultad de la ruta",
+            example: "baja",
+          },
+          companions:{
+            type: "string",
+            description: "acompañantes de la ruta",
+            example: "solo"
+          },
+          transport:{
+            type: "string",
+            description: "modo de transporte",
+            example: "bicicleta"
           }
+        },
+      },
+      createQuiz: {
+        type: "object",
+        properties: {
+          age: {
+            type: "number",
+            description: "edad del usuario",
+            example: "1987",
+          },
+          gender: {
+            type: "string",
+            description: "género del usuario",
+            example: "hombre",
+          },
+          routeType: {
+            type: "string",
+            description: "tipo de ruta",
+            example: "patrimonio",
+          },
+          price: {
+            type: "string",
+            description: "precio de la ruta",
+            example: "gratis",
+          },
+          difficulty: {
+            type: "string",
+            description: "dificultad de la ruta",
+            example: "baja",
+          },
+          companions:{
+            type: "string",
+            description: "acompañantes de la ruta",
+            example: "solo"
+          },
+          transport:{
+            type: "string",
+            description: "modo de transporte",
+            example: "bicicleta"
+          },
         },
       },
     },
